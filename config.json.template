@@ -1,0 +1,10 @@
+{
+  "twitch": {
+    "loginChannel": "",
+    "accessToken": "oauth:XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+  },
+  "translate_gas": {
+    "target": "ja",
+    "url": "https://script.google.com/macros/s/XXXXXXX_XXXXXX-XXXXX_XXXXX-XXXXXXXXXXXXXXXXXXX-XXXXXXXXXXXXXXXX-XXXXXXXX/exec"
+  }
+}
