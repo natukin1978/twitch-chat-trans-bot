@@ -9,6 +9,7 @@ from emoji import distinct_emoji_list
 from twitchio.ext import commands
 
 from config_helper import readConfig
+# from talk_voice import talk_voice
 
 config = readConfig()
 
@@ -79,6 +80,7 @@ class Bot(commands.Bot):
             return
 
         text = msg.content
+        user = msg.author.display_name
 
         emote_list = get_emotes(msg)
 
@@ -97,13 +99,14 @@ class Bot(commands.Bot):
 
         result_langdetect = langdetect.detect(text)
         if result_langdetect == GAS_TARGET:
+            # await talk_voice(text, 50191)
             return
 
         translated_text = await translate_gas(text, GAS_TARGET)
         if not translated_text or text == translated_text:
             return
 
-        user = msg.author.display_name
+        # await talk_voice(translated_text, 50191)
         await msg.channel.send(f"{translated_text} [by {user}]")
 
 
