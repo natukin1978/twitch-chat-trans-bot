@@ -5,21 +5,14 @@ from typing import List
 import aiohttp
 import langdetect
 import twitchio
+import global_value as g
 from emoji import distinct_emoji_list
 from twitchio.ext import commands
 
 from config_helper import readConfig
 # from talk_voice import talk_voice
 
-config = readConfig()
-
-# TwitchのOAuthトークン
-ACCESS_TOKEN = config["twitch"]["accessToken"]
-# Twitchチャンネルの名前
-CHANNEL_NAME = config["twitch"]["loginChannel"]
-
-GAS_TARGET = config["translate_gas"]["target"]
-GAS_URL = config["translate_gas"]["url"]
+g.config = readConfig()
 
 
 async def translate_gas(text: str, target: str) -> str:
@@ -29,7 +22,7 @@ async def translate_gas(text: str, target: str) -> str:
             "target": target,
         }
         async with aiohttp.ClientSession() as session:
-            async with session.get(GAS_URL, params=param) as response:
+            async with session.get(g.config["translate_gas"]["url"], params=param) as response:
                 result = await response.json()
                 return result["text"]
     except Exception as e:
@@ -66,9 +59,9 @@ def get_emotes(msg: twitchio.Message) -> List[str]:
 class Bot(commands.Bot):
     def __init__(self):
         super().__init__(
-            token=ACCESS_TOKEN,
+            token=g.config["twitch"]["accessToken"],
             prefix="!",
-            initial_channels=[CHANNEL_NAME],
+            initial_channels=[g.config["twitch"]["loginChannel"]],
         )
 
     async def event_message(self, msg: twitchio.Message):
@@ -98,11 +91,11 @@ class Bot(commands.Bot):
             return
 
         result_langdetect = langdetect.detect(text)
-        if result_langdetect == GAS_TARGET:
+        if result_langdetect == g.config["translate_gas"]["target"]:
             # await talk_voice(text, 50191)
             return
 
-        translated_text = await translate_gas(text, GAS_TARGET)
+        translated_text = await translate_gas(text, g.config["translate_gas"]["target"])
         if not translated_text or text == translated_text:
             return
 
