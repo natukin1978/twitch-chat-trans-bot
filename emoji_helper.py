@@ -3,7 +3,7 @@ from emoji import distinct_emoji_list
 from typing import List
 
 
-def get_emotes(msg: twitchio.Message) -> List[str]:
+def add_emotes(emotes: List[str], msg: twitchio.Message) -> None:
     if not msg.tags:
         return []
 
@@ -11,9 +11,8 @@ def get_emotes(msg: twitchio.Message) -> List[str]:
     if not mt_emotes:
         return []
 
-    emotes = mt_emotes.split("/")
-    result = []
-    for emote in emotes:
+    mt_emotes_split = mt_emotes.split("/")
+    for emote in mt_emotes_split:
         _, e_pos = emote.split(":")
         ed_pos = None
         if "," in e_pos:
@@ -24,16 +23,14 @@ def get_emotes(msg: twitchio.Message) -> List[str]:
             ed_pos = [e_pos]
         for e in ed_pos:
             e_s, e_e = e.split("-")
-            result.append(msg.content[int(e_s) : int(e_e) + 1])
+            emotes.append(msg.content[int(e_s) : int(e_e) + 1])
 
-    return result
+
+def add_emoji(emotes: List[str], text: str) -> None:
+    emotes.extend(distinct_emoji_list(text))
 
 
 def remove_emoji(text: str, emotes: List[str]) -> str:
-    emojis = distinct_emoji_list(text)
-    for emoji in emojis:
-        emotes.append(emoji)
-
     emotes = list(set(emotes))
     emotes.sort(key=len, reverse=True)
     for emote in emotes:
@@ -43,6 +40,8 @@ def remove_emoji(text: str, emotes: List[str]) -> str:
     return text
 
 
-def get_text_without_emoji(msg: twitchio.Message) -> str:
-    emotes = get_emotes(msg)
+def get_text_without_emojis(msg: twitchio.Message) -> str:
+    emotes = []
+    add_emotes(emotes, msg)
+    add_emoji(emotes, msg.content)
     return remove_emoji(msg.content, emotes)

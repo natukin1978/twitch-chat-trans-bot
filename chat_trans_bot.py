@@ -8,7 +8,7 @@ import global_value as g
 from twitchio.ext import commands
 
 from config_helper import readConfig
-from emoji_helper import get_text_without_emoji
+from emoji_helper import get_text_without_emojis
 
 # from talk_voice import talk_voice
 
@@ -50,7 +50,7 @@ class Bot(commands.Bot):
 
         user = msg.author.display_name
 
-        text = get_text_without_emoji(msg)
+        text = get_text_without_emojis(msg)
         if not text:
             return
 
