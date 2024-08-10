@@ -9,7 +9,7 @@ from twitchio.ext import commands
 
 from config_helper import readConfig
 from emoji_helper import get_text_without_emojis
-from voice_map_helper import read_voice_map
+from voice_map_helper import read_voice_map, get_cid
 from talk_voice import talk_voice, set_voice_effect
 from one_comme_users import read_one_comme_users, get_nickname
 
@@ -59,16 +59,12 @@ class Bot(commands.Bot):
         if msg.echo:
             return
 
-        if msg.content.startswith("!"):
-            await self.handle_commands(msg)
-            return
-
         text = get_text_without_emojis(msg)
         if not text:
             return
 
         user = msg.author.display_name
-        cid = g.voice_map.get(user, 0)
+        cid = get_cid(user)
 
         nickname = get_nickname(user)
         if not nickname:
