@@ -7,6 +7,15 @@
     "target": "ja",
     "url": "https://script.google.com/macros/s/XXXXXXX_XXXXXX-XXXXX_XXXXX-XXXXXXXXXXXXXXXXXXX-XXXXXXXXXXXXXXXX-XXXXXXXX/exec"
   },
+  "assistantSeika": {
+    "name": "localhost",
+    "port": 7180,
+    "login": "SeikaServerUser",
+    "password": "SeikaServerPassword",
+    "speed": 1.0,
+    "volume": 1.0,
+    "defaultCid": 0
+  },
   "oneComme": {
     "pathUsersCsv": ""
   }

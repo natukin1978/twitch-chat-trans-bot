@@ -9,10 +9,14 @@ from twitchio.ext import commands
 
 from config_helper import readConfig
 from emoji_helper import get_text_without_emojis
-
-# from talk_voice import talk_voice
+from voice_map_helper import read_voice_map
+from talk_voice import talk_voice, set_voice_effect
+from one_comme_users import read_one_comme_users, get_nickname
 
 g.config = readConfig()
+
+g.voice_map = read_voice_map()
+g.one_comme_users = read_one_comme_users()
 
 
 async def translate_gas(text: str, target: str) -> str:
@@ -32,6 +36,17 @@ async def translate_gas(text: str, target: str) -> str:
         return ""
 
 
+async def set_all_voice_effect() -> None:
+    configAS = g.config["assistantSeika"]
+    set_cid = set()
+    for value in g.voice_map.values():
+        set_cid.add(value[0])
+    set_cid.add(configAS["defaultCid"])
+    for cid in set_cid:
+        await set_voice_effect("speed", configAS["speed"], cid)
+        await set_voice_effect("volume", configAS["volume"], cid)
+
+
 class Bot(commands.Bot):
     def __init__(self):
         super().__init__(
@@ -48,26 +63,36 @@ class Bot(commands.Bot):
             await self.handle_commands(msg)
             return
 
-        user = msg.author.display_name
-
         text = get_text_without_emojis(msg)
         if not text:
             return
 
+        user = msg.author.display_name
+        cid = g.voice_map.get(user, 0)
+
+        nickname = get_nickname(user)
+        if not nickname:
+            nickname = user
+
+        if not nickname.endswith("ちゃん"):
+            nickname += "さん"
+
         result_langdetect = langdetect.detect(text)
         if result_langdetect == g.config["translate_gas"]["target"]:
-            # await talk_voice(text, 50191)
+            await talk_voice(f"{nickname} {text}", cid)
             return
 
         translated_text = await translate_gas(text, g.config["translate_gas"]["target"])
         if not translated_text or text == translated_text:
             return
 
-        # await talk_voice(translated_text, 50191)
+        await talk_voice(f"{nickname} {translated_text}", cid)
         await msg.channel.send(f"{translated_text} [by {user}]")
 
 
 async def main():
+    await set_all_voice_effect()
+
     bot = Bot()
     await bot.start()
 

@@ -13,24 +13,30 @@ async def _request_voice_base(suffix_param: str) -> aiohttp.ClientResponse:
             return response
 
 
-async def set_voice_effect(param: str, value: Any) -> None:
+async def set_voice_effect(param: str, value: Any, cid: int = 0) -> None:
     try:
         configAS = g.config["assistantSeika"]
-        cid = configAS["cid"]
-        if not cid:
+        defaultCid = configAS["defaultCid"]
+        if not defaultCid:
+            # デフォルトが無効なら処理しない
             return
+        if cid == 0:
+            cid = defaultCid
         suffix_param = f"EFFECT/{cid}/{param}/{value}"
         await _request_voice_base(suffix_param)
     except Exception as e:
         print(e)
 
 
-async def talk_voice(text: str) -> None:
+async def talk_voice(text: str, cid: int = 0) -> None:
     try:
         configAS = g.config["assistantSeika"]
-        cid = configAS["cid"]
-        if not cid:
+        defaultCid = configAS["defaultCid"]
+        if not defaultCid:
+            # デフォルトが無効なら処理しない
             return
+        if cid == 0:
+            cid = defaultCid
         suffix_param = f"PLAYASYNC2/{cid}/{text}"
         await _request_voice_base(suffix_param)
     except Exception as e:
