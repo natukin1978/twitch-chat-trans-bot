@@ -1,15 +1,15 @@
 import asyncio
 import json
-from typing import List
 
 import aiohttp
 import langdetect
 import twitchio
 import global_value as g
-from emoji import distinct_emoji_list
 from twitchio.ext import commands
 
 from config_helper import readConfig
+from emoji_helper import get_text_without_emoji
+
 # from talk_voice import talk_voice
 
 g.config = readConfig()
@@ -22,38 +22,14 @@ async def translate_gas(text: str, target: str) -> str:
             "target": target,
         }
         async with aiohttp.ClientSession() as session:
-            async with session.get(g.config["translate_gas"]["url"], params=param) as response:
+            async with session.get(
+                g.config["translate_gas"]["url"], params=param
+            ) as response:
                 result = await response.json()
                 return result["text"]
     except Exception as e:
         print(e)
         return ""
-
-
-def get_emotes(msg: twitchio.Message) -> List[str]:
-    if not msg.tags:
-        return []
-
-    mt_emotes = msg.tags["emotes"]
-    if not mt_emotes:
-        return []
-
-    emotes = mt_emotes.split("/")
-    result = []
-    for emote in emotes:
-        _, e_pos = emote.split(":")
-        ed_pos = None
-        if "," in e_pos:
-            # 同一エモートが複数使われてたら，その数分，情報が入ってくる
-            # （例：1110537:4-14,16-26）
-            ed_pos = e_pos.split(",")
-        else:
-            ed_pos = [e_pos]
-        for e in ed_pos:
-            e_s, e_e = e.split("-")
-            result.append(msg.content[int(e_s) : int(e_e) + 1])
-
-    return result
 
 
 class Bot(commands.Bot):
@@ -72,21 +48,9 @@ class Bot(commands.Bot):
             await self.handle_commands(msg)
             return
 
-        text = msg.content
         user = msg.author.display_name
 
-        emote_list = get_emotes(msg)
-
-        emojis = distinct_emoji_list(text)
-        for emoji in emojis:
-            emote_list.append(emoji)
-
-        emote_list = list(set(emote_list))
-        emote_list.sort(key=len, reverse=True)
-        for emote in emote_list:
-            text = text.replace(emote, "")
-
-        text = text.strip()
+        text = get_text_without_emoji(msg)
         if not text:
             return
 
