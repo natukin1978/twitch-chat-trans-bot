@@ -17,7 +17,7 @@ g.config = readConfig()
 
 g.voice_map = read_voice_map()
 g.one_comme_users = read_one_comme_users()
-
+g.called_set_all_voice_effect = False
 
 async def translate_gas(text: str, target: str) -> str:
     try:
@@ -73,6 +73,11 @@ class Bot(commands.Bot):
         if not nickname.endswith("ちゃん"):
             nickname += "さん"
 
+        if not g.called_set_all_voice_effect:
+            # 1回だけ
+            await set_all_voice_effect()
+            g.called_set_all_voice_effect = True
+
         result_langdetect = langdetect.detect(text)
         if result_langdetect == g.config["translate_gas"]["target"]:
             await talk_voice(f"{nickname} {text}", cid)
@@ -87,8 +92,6 @@ class Bot(commands.Bot):
 
 
 async def main():
-    await set_all_voice_effect()
-
     bot = Bot()
     await bot.start()
 
