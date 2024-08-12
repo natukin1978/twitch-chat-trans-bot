@@ -19,6 +19,17 @@ g.voice_map = read_voice_map()
 g.one_comme_users = read_one_comme_users()
 g.called_set_all_voice_effect = False
 
+
+def get_use_nickname(displayName: str) -> str:
+    nickname = get_nickname(displayName)
+    if not nickname:
+        nickname = displayName
+    configH = g.config["honorifics"]
+    if not next(filter(lambda x: nickname.endswith(x), configH["other"]), None):
+        nickname += configH["default"]
+    return nickname
+
+
 async def translate_gas(text: str, target: str) -> str:
     try:
         param = {
@@ -66,12 +77,7 @@ class Bot(commands.Bot):
         user = msg.author.display_name
         cid = get_cid(user)
 
-        nickname = get_nickname(user)
-        if not nickname:
-            nickname = user
-
-        if not nickname.endswith("ちゃん"):
-            nickname += "さん"
+        nickname = get_use_nickname(user)
 
         if not g.called_set_all_voice_effect:
             # 1回だけ

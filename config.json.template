@@ -16,6 +16,14 @@
     "volume": 1.0,
     "defaultCid": 0
   },
+  "honorifics": {
+    "default": "さん",
+    "other": [
+      "ちゃん",
+      "さま",
+      "たん"
+    ]
+  },
   "oneComme": {
     "pathUsersCsv": ""
   }
