@@ -58,7 +58,18 @@ async def set_all_voice_effect() -> None:
         await set_voice_effect("volume", configAS["volume"], cid)
 
 
+async def talk_voice_with_nickname(nickname: str, text: str, cid: int) -> None:
+    value = text
+    if not nickname:
+        value = text
+    else:
+        value = nickname + " " + text
+    await talk_voice(value, cid)
+
+
 class Bot(commands.Bot):
+    prev_nickname = ""
+
     def __init__(self):
         super().__init__(
             token=g.config["twitch"]["accessToken"],
@@ -78,6 +89,10 @@ class Bot(commands.Bot):
         cid = get_cid(user)
 
         nickname = get_use_nickname(user)
+        if self.prev_nickname == nickname:
+            nickname = ""
+        else:
+            self.prev_nickname = nickname
 
         if not g.called_set_all_voice_effect:
             # 1回だけ
@@ -86,14 +101,14 @@ class Bot(commands.Bot):
 
         result_langdetect = langdetect.detect(text)
         if result_langdetect == g.config["translate_gas"]["target"]:
-            await talk_voice(f"{nickname} {text}", cid)
+            await talk_voice_with_nickname(nickname, text, cid)
             return
 
         translated_text = await translate_gas(text, g.config["translate_gas"]["target"])
         if not translated_text or text == translated_text:
             return
 
-        await talk_voice(f"{nickname} {translated_text}", cid)
+        await talk_voice_with_nickname(nickname, translated_text, cid)
         await msg.channel.send(f"{translated_text} [by {user}]")
 
 
