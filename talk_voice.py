@@ -37,7 +37,11 @@ async def talk_voice(text: str, cid: int = 0) -> None:
             return
         if cid == 0:
             cid = defaultCid
-        suffix_param = f"PLAYASYNC2/{cid}/{text}"
+        if configAS["playAsync"]:
+            cmd = "PLAYASYNC2"
+        else:
+            cmd = "PLAY2"
+        suffix_param = f"{cmd}/{cid}/{text}"
         await _request_voice_base(suffix_param)
     except Exception as e:
         print(e)

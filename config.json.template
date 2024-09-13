@@ -12,6 +12,7 @@
     "port": 7180,
     "login": "SeikaServerUser",
     "password": "SeikaServerPassword",
+    "playAsync": false,
     "speed": 1.0,
     "volume": 1.0,
     "defaultCid": 0
