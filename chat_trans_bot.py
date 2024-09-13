@@ -82,22 +82,24 @@ class Bot(commands.Bot):
             return
 
         text = get_text_without_emojis(msg)
-        if not text:
-            return
-
         user = msg.author.display_name
         cid = get_cid(user)
-
         nickname = get_use_nickname(user)
-        if self.prev_nickname == nickname:
-            nickname = ""
-        else:
-            self.prev_nickname = nickname
 
         if not g.called_set_all_voice_effect:
             # 1回だけ
             await set_all_voice_effect()
             g.called_set_all_voice_effect = True
+
+        if not text:
+            # 本文が無い場合でも名前だけは読み上げる
+            await talk_voice(nickname, cid)
+            return
+
+        if self.prev_nickname == nickname:
+            nickname = ""
+        else:
+            self.prev_nickname = nickname
 
         result_langdetect = langdetect.detect(text)
         if result_langdetect == g.config["translate_gas"]["target"]:
