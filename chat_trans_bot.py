@@ -30,6 +30,24 @@ def get_use_nickname(displayName: str) -> str:
     return nickname
 
 
+async def translate_deepL(text: str, target: str) -> str:
+    try:
+        param = {
+            "auth_key": g.config["deepL"]["apiKey"],
+            "text": text,
+            "target_lang": target,
+        }
+        async with aiohttp.ClientSession() as session:
+            async with session.post(
+                g.config["deepL"]["endpoint"], params=param
+            ) as response:
+                result = await response.json()
+                return result["translations"][0]["text"]
+    except Exception as e:
+        print(e)
+        return ""
+
+
 async def translate_gas(text: str, target: str) -> str:
     try:
         param = {

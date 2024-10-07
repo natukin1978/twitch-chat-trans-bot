@@ -6,6 +6,10 @@
   "translate": {
     "target": "ja"
   },
+  "deepL": {
+    "endpoint": "https://api-free.deepl.com/v2/translate",
+    "apiKey": "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX:fx"
+  },
   "translate_gas": {
     "url": "https://script.google.com/macros/s/XXXXXXX_XXXXXX-XXXXX_XXXXX-XXXXXXXXXXXXXXXXXXX-XXXXXXXXXXXXXXXX-XXXXXXXX/exec"
   },
