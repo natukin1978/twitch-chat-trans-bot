@@ -4,14 +4,14 @@ import json
 import aiohttp
 import langdetect
 import twitchio
-import global_value as g
 from twitchio.ext import commands
 
+import global_value as g
 from config_helper import readConfig
 from emoji_helper import get_text_without_emojis
-from voice_map_helper import read_voice_map, get_cid
-from talk_voice import talk_voice, set_voice_effect
-from one_comme_users import read_one_comme_users, get_nickname
+from one_comme_users import get_nickname, read_one_comme_users
+from talk_voice import set_voice_effect, talk_voice
+from voice_map_helper import get_cid, read_voice_map
 
 g.config = readConfig()
 
@@ -63,6 +63,15 @@ async def translate_gas(text: str, target: str) -> str:
     except Exception as e:
         print(e)
         return ""
+
+
+async def translate(text: str, target: str) -> str:
+    service = g.config["translate"]["service"]
+    if service == "deepL":
+        return await translate_deepL(text, target)
+    if service == "translate_gas":
+        return await translate_gas(text, target)
+    return ""
 
 
 async def set_all_voice_effect() -> None:
@@ -128,7 +137,7 @@ class Bot(commands.Bot):
             await talk_voice_with_nickname(nickname, text, cid)
             return
 
-        translated_text = await translate_gas(text, g.config["translate"]["target"])
+        translated_text = await translate(text, g.config["translate"]["target"])
         if not translated_text or text == translated_text:
             return
 

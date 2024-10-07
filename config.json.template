@@ -4,7 +4,8 @@
     "accessToken": "oauth:XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
   },
   "translate": {
-    "target": "ja"
+    "target": "ja",
+    "service": "deepL"
   },
   "deepL": {
     "endpoint": "https://api-free.deepl.com/v2/translate",
