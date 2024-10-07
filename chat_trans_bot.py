@@ -81,6 +81,10 @@ class Bot(commands.Bot):
         if msg.echo:
             return
 
+        if msg.content.startswith("!"):
+            await self.handle_commands(msg)
+            return
+
         text = get_text_without_emojis(msg)
         user = msg.author.display_name
         cid = get_cid(user)
@@ -102,11 +106,11 @@ class Bot(commands.Bot):
             self.prev_nickname = nickname
 
         result_langdetect = langdetect.detect(text)
-        if result_langdetect == g.config["translate_gas"]["target"]:
+        if result_langdetect == g.config["translate"]["target"]:
             await talk_voice_with_nickname(nickname, text, cid)
             return
 
-        translated_text = await translate_gas(text, g.config["translate_gas"]["target"])
+        translated_text = await translate_gas(text, g.config["translate"]["target"])
         if not translated_text or text == translated_text:
             return
 
