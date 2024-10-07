@@ -1,5 +1,6 @@
 import asyncio
 import json
+import random
 
 import aiohttp
 import langdetect
@@ -30,10 +31,20 @@ def get_use_nickname(displayName: str) -> str:
     return nickname
 
 
+def get_random_value() -> str:
+    service = g.config["translate"]["service"]
+    if service == "deepL":
+        values = g.config["deepL"]["apiKey"]
+    if service == "translate_gas":
+        values = g.config["translate_gas"]["url"]
+    i = random.randrange(len(values))
+    return values[i]
+
+
 async def translate_deepL(text: str, target: str) -> str:
     try:
         param = {
-            "auth_key": g.config["deepL"]["apiKey"],
+            "auth_key": get_random_value(),
             "text": text,
             "target_lang": target,
         }
@@ -55,9 +66,7 @@ async def translate_gas(text: str, target: str) -> str:
             "target": target,
         }
         async with aiohttp.ClientSession() as session:
-            async with session.get(
-                g.config["translate_gas"]["url"], params=param
-            ) as response:
+            async with session.get(get_random_value(), params=param) as response:
                 result = await response.json()
                 return result["text"]
     except Exception as e:
