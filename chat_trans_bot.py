@@ -95,13 +95,15 @@ async def set_all_voice_effect() -> None:
         await set_voice_effect("volume", configAS["volume"], cid)
 
 
-async def talk_voice_with_nickname(nickname: str, text: str, cid: int) -> None:
+async def talk_voice_with_nickname(
+    nickname: str, text: str, cid: int, sound_device_id: int
+) -> None:
     value = text
     if not nickname:
         value = text
     else:
         value = nickname + " " + text
-    await talk_voice(value, cid)
+    await talk_voice(value, cid, sound_device_id)
 
 
 class Bot(commands.Bot):
@@ -125,6 +127,8 @@ class Bot(commands.Bot):
         text = get_text_without_emojis(msg)
         user = msg.author.display_name
         cid = get_cid(user)
+        sound_device_name = get_sound_device_name(user)
+        sound_device_id = get_sound_device_id(sound_device_name)
         nickname = get_use_nickname(user)
 
         if not g.called_set_all_voice_effect:
@@ -134,7 +138,7 @@ class Bot(commands.Bot):
 
         if not text:
             # 本文が無い場合でも名前だけは読み上げる
-            await talk_voice(nickname, cid)
+            await talk_voice(nickname, cid, sound_device_id)
             return
 
         if self.prev_nickname == nickname:
@@ -144,14 +148,14 @@ class Bot(commands.Bot):
 
         result_langdetect = langdetect.detect(text)
         if result_langdetect == g.config["translate"]["target"]:
-            await talk_voice_with_nickname(nickname, text, cid)
+            await talk_voice_with_nickname(nickname, text, cid, sound_device_id)
             return
 
         translated_text = await translate(text, g.config["translate"]["target"])
         if not translated_text or text == translated_text:
             return
 
-        await talk_voice_with_nickname(nickname, translated_text, cid)
+        await talk_voice_with_nickname(nickname, translated_text, cid, sound_device_id)
         await msg.channel.send(f"{translated_text} [by {user}]")
 
 

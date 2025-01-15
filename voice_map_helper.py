@@ -20,3 +20,10 @@ def get_cid(displayName: str) -> int:
     if not voice:
         return 0
     return voice[0]
+
+
+def get_sound_device_name(displayName: str) -> str:
+    voice = g.voice_map.get(displayName, None)
+    if not voice:
+        return 0
+    return voice[1]
