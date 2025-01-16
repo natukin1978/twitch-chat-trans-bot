@@ -11,7 +11,7 @@ import global_value as g
 from config_helper import readConfig
 from emoji_helper import get_text_without_emojis
 from one_comme_users import get_nickname, read_one_comme_users
-from sound_helper import get_sound_device_id
+from sound_helper import get_sound_device
 from talk_voice import set_voice_effect, talk_voice
 from voice_map_helper import get_cid, get_sound_device_name, read_voice_map
 
@@ -128,7 +128,7 @@ class Bot(commands.Bot):
         user = msg.author.display_name
         cid = get_cid(user)
         sound_device_name = get_sound_device_name(user)
-        sound_device_id = get_sound_device_id(sound_device_name)
+        sound_device_id, sound_device_name = get_sound_device(sound_device_name)
         nickname = get_use_nickname(user)
 
         if not g.called_set_all_voice_effect:

@@ -3,7 +3,7 @@ from typing import Any
 import aiohttp
 
 import global_value as g
-from sound_helper import get_sound_device_id, play_wav_from_memory
+from sound_helper import get_sound_device, play_wav_from_memory
 
 
 def get_url_auth(suffix_param: str) -> tuple[str, aiohttp.BasicAuth]:
@@ -46,7 +46,7 @@ async def talk_voice(text: str, cid: int = 0, sound_device_id: int = -1) -> None
         if cid == 0:
             cid = defaultCid
         if sound_device_id == -1:
-            sound_device_id, _ = get_sound_device_id(configAS["soundDeviceName"])
+            sound_device_id, _ = get_sound_device(configAS["soundDeviceName"])
         cmd = "SAVE2"
         suffix_param = f"{cmd}/{cid}/{text}"
         url, auth = get_url_auth(suffix_param)

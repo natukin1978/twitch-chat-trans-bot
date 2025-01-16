@@ -4,7 +4,7 @@ import sounddevice as sd
 import soundfile as sf
 
 
-def get_sound_device_id(sound_device_name: str) -> tuple[int, str]:
+def get_sound_device(sound_device_name: str) -> tuple[int, str]:
     if not sound_device_name:
         return (-1, "Default")
     devices = sd.query_devices()
