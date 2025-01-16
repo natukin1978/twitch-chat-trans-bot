@@ -1,5 +1,8 @@
 import asyncio
 import sys
+import os
+
+sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
 
 import global_value as g
 from config_helper import readConfig
