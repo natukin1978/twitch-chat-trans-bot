@@ -4,12 +4,16 @@ import sounddevice as sd
 import soundfile as sf
 
 
-def get_sound_device_id(sound_device_name: str):
+def get_sound_device_id(sound_device_name: str) -> tuple[int, str]:
+    if not sound_device_name:
+        return (-1, "Default")
     devices = sd.query_devices()
     for i, device in enumerate(devices):
-        if device["name"] == sound_device_name:
-            return i
-    return 0
+        hostapi = sd.query_hostapis(device["hostapi"])
+        full_name = f'{device["name"]}, {hostapi["name"]}'
+        if sound_device_name in full_name:
+            return (i, full_name)
+    return (-1, "Not found")
 
 
 def play_wav_from_memory(wav_bytes, sound_device_id: int, wait: bool):
