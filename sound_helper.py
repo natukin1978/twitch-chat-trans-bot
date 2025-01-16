@@ -17,7 +17,10 @@ def play_wav_from_memory(wav_bytes, sound_device_id: int, wait: bool):
     try:
         with io.BytesIO(wav_bytes) as wav_file:
             data, samplerate = sf.read(wav_file)
-            sd.play(data, samplerate, device=sound_device_id)
+            if sound_device_id < 0:
+                sd.play(data, samplerate)
+            else:
+                sd.play(data, samplerate, device=sound_device_id)
             if wait:
                 sd.wait()
     except sf.SoundFileError as e:

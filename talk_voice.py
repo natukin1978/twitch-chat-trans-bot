@@ -1,4 +1,4 @@
-from typing import Any, Tuple
+from typing import Any
 
 import aiohttp
 
@@ -6,7 +6,7 @@ import global_value as g
 from sound_helper import get_sound_device_id, play_wav_from_memory
 
 
-def get_url_auth(suffix_param: str) -> Tuple[str, aiohttp.BasicAuth]:
+def get_url_auth(suffix_param: str) -> tuple[str, aiohttp.BasicAuth]:
     configAS = g.config["assistantSeika"]
     url = f"http://{configAS['name']}:{configAS['port']}/{suffix_param}"
     auth = aiohttp.BasicAuth(login=configAS["login"], password=configAS["password"])
@@ -36,7 +36,7 @@ async def set_voice_effect(param: str, value: Any, cid: int = 0) -> None:
         print(e)
 
 
-async def talk_voice(text: str, cid: int = 0, sound_device_id: int = 0) -> None:
+async def talk_voice(text: str, cid: int = 0, sound_device_id: int = -1) -> None:
     try:
         configAS = g.config["assistantSeika"]
         defaultCid = configAS["defaultCid"]
@@ -45,8 +45,8 @@ async def talk_voice(text: str, cid: int = 0, sound_device_id: int = 0) -> None:
             return
         if cid == 0:
             cid = defaultCid
-        if sound_device_id == 0:
-            sound_device_id = get_sound_device_id(configAS["soundDeviceName"])
+        if sound_device_id == -1:
+            sound_device_id, _ = get_sound_device_id(configAS["soundDeviceName"])
         cmd = "SAVE2"
         suffix_param = f"{cmd}/{cid}/{text}"
         url, auth = get_url_auth(suffix_param)
