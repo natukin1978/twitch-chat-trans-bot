@@ -13,7 +13,7 @@ from emoji_helper import get_text_without_emojis
 from one_comme_users import get_nickname, read_one_comme_users
 from sound_helper import get_sound_device
 from talk_voice import set_voice_effect, talk_voice
-from voice_map_helper import get_cid, get_sound_device_name, read_voice_map
+from voice_map_helper import get_fields_voice_map, read_voice_map
 
 g.config = readConfig()
 
@@ -126,8 +126,7 @@ class Bot(commands.Bot):
 
         text = get_text_without_emojis(msg)
         user = msg.author.display_name
-        cid = get_cid(user)
-        sound_device_name = get_sound_device_name(user)
+        cid, sound_device_name = get_fields_voice_map(user)
         sound_device_id, sound_device_name = get_sound_device(sound_device_name)
         nickname = get_use_nickname(user)
 

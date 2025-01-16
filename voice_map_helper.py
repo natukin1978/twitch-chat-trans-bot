@@ -15,15 +15,8 @@ def read_voice_map() -> Dict[str, Any]:
     return result
 
 
-def get_cid(displayName: str) -> int:
+def get_fields_voice_map(displayName: str) -> tuple[int, str]:
     voice = g.voice_map.get(displayName, None)
     if not voice:
-        return 0
-    return voice[0]
-
-
-def get_sound_device_name(displayName: str) -> str:
-    voice = g.voice_map.get(displayName, None)
-    if not voice:
-        return 0
-    return voice[1]
+        return (0, "")
+    return tuple(voice)
