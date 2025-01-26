@@ -137,6 +137,7 @@ class Bot(commands.Bot):
             return
 
         if self.prev_nickname == nickname:
+            # 直前と同じ人の名前は省略する
             nickname = ""
         else:
             self.prev_nickname = nickname
@@ -147,8 +148,8 @@ class Bot(commands.Bot):
             return
 
         translated_text = await translate(text, g.config["translate"]["target"])
-        if not translated_text or text == translated_text:
-            return
+        if not translated_text:
+            translated_text = text
 
         await talk_voice_with_nickname(nickname, translated_text, cid)
         await msg.channel.send(f"{translated_text} [by {user}]")
