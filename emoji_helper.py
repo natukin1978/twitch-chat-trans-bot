@@ -1,7 +1,9 @@
+from typing import List
+
 import twitchio
 from emoji import distinct_emoji_list
+
 from emote_helper import add_emotes, remove_emote
-from typing import List
 
 
 def add_emoji(emotes: List[str], text: str) -> None:

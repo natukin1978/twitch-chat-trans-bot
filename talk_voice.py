@@ -1,6 +1,7 @@
+from typing import Any
+
 import aiohttp
 
-from typing import Any
 import global_value as g
 
 
