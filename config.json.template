@@ -26,8 +26,7 @@
     "playAsync": false,
     "speed": 1.0,
     "volume": 1.0,
-    "defaultCid": 0,
-    "enableBridge": false
+    "defaultCid": 0
   },
   "honorifics": {
     "default": "さん",
