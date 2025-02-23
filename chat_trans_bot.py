@@ -1,6 +1,8 @@
 import asyncio
 import json
+import os
 import random
+import sys
 
 import aiohttp
 import langdetect
@@ -8,6 +10,10 @@ import twitchio
 from twitchio.ext import commands
 
 import global_value as g
+
+g.app_name = "chat_trans_bot"
+g.base_dir = os.path.dirname(os.path.abspath(sys.argv[0]))
+
 from config_helper import readConfig
 from emoji_helper import get_text_without_emojis
 from one_comme_users import get_nickname, read_one_comme_users
