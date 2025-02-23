@@ -16,6 +16,7 @@ g.base_dir = os.path.dirname(os.path.abspath(sys.argv[0]))
 
 from config_helper import read_config
 from emoji_helper import get_text_without_emojis
+from exclude_words_helper import match_exclude_word, read_exclude_words
 from one_comme_users import get_nickname, read_one_comme_users
 from talk_voice import set_voice_effect, talk_voice
 from voice_map_helper import get_cid, read_voice_map
@@ -23,6 +24,7 @@ from voice_map_helper import get_cid, read_voice_map
 g.config = read_config()
 
 g.voice_map = read_voice_map()
+g.exclude_words = read_exclude_words()
 g.one_comme_users = read_one_comme_users()
 g.called_set_all_voice_effect = False
 
@@ -148,8 +150,14 @@ class Bot(commands.Bot):
         else:
             self.prev_nickname = nickname
 
+        if match_exclude_word(g.exclude_words, text):
+            # 除外キーワードなので翻訳しない
+            await talk_voice_with_nickname(nickname, text, cid)
+            return
+
         result_langdetect = langdetect.detect(text)
         if result_langdetect == g.config["translate"]["target"]:
+            # 母国語と同じ
             await talk_voice_with_nickname(nickname, text, cid)
             return
 
