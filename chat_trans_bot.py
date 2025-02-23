@@ -14,13 +14,13 @@ import global_value as g
 g.app_name = "chat_trans_bot"
 g.base_dir = os.path.dirname(os.path.abspath(sys.argv[0]))
 
-from config_helper import readConfig
+from config_helper import read_config
 from emoji_helper import get_text_without_emojis
 from one_comme_users import get_nickname, read_one_comme_users
 from talk_voice import set_voice_effect, talk_voice
 from voice_map_helper import get_cid, read_voice_map
 
-g.config = readConfig()
+g.config = read_config()
 
 g.voice_map = read_voice_map()
 g.one_comme_users = read_one_comme_users()
