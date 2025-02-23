@@ -30,20 +30,28 @@
 
 | キー                        | 概要                                                                                 |
 | --------------------------- | ------------------------------------------------------------------------------------ |
-| twitch/loginChannel         | ログインする対象のチャンネル                                                         |
-| twitch/accessToken          | 翻訳結果をコメントするユーザーのOAuthトークン https://twitchapps.com/tmi/            |
-| translate/target            | 翻訳結果の言語(つまり母国語)                                                         |
-| translate/service           | 使用する翻訳サービス(`deepL`もしくは`translate_gas`)                                 |
+| twitch.loginChannel         | ログインする対象のチャンネル                                                         |
+| twitch.accessToken          | 翻訳結果をコメントするユーザーのOAuthトークン https://twitchapps.com/tmi/            |
+| translate.target            | 翻訳結果の言語(つまり母国語)                                                         |
+| translate.service           | 使用する翻訳サービス(`deepL`もしくは`translate_gas`)                                 |
 | deepL                       | DeepLのエンドポイントやAPIキーを設定します                                           |
 | translate_gas               | GAS(Google Apps Script)の翻訳APIのURLを設定します ※1                                 |
 | assistantSeika              | 合成音声による読み上げを行いたい時の設定                                             |
-| assistantSeika/defaultCid   | キャラクターのID                                                                     |
-| honorifics/default          | 通常使用する敬称で、これをユーザー名の末尾に追加します                               |
-| honorifics/other            | その他の敬称。ユーザー名の末尾がこのリストに含まれている場合はそのまま読み上げます   |
-| oneComme/pathUsersCsv       | わんコメのユーザーリストをCSV出力したパスを指定します。(ニックネームで使用)          |
+| assistantSeika.defaultCid   | キャラクターのID                                                                     |
+| honorifics.default          | 通常使用する敬称で、これをユーザー名の末尾に追加します                               |
+| honorifics.other            | その他の敬称。ユーザー名の末尾がこのリストに含まれている場合はそのまま読み上げます   |
+| oneComme.pathUsersCsv       | わんコメのユーザーリストをCSV出力したパスを指定します。(ニックネームで使用)          |
 
 ※1 Google翻訳APIを無料で作る方法
 https://qiita.com/satto_sann/items/be4177360a0bc3691fdf
+
+### exclude_words.txt
+
+翻訳を除外するキーワード郡を設定する事ができます。
+
+- 完全一致で指定します
+- 大文字・小文字及び全角半角を区別しません
+- 正規表現での指定が可能です
 
 ### voice_map.csv
 
