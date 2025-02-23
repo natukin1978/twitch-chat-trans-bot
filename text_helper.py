@@ -2,6 +2,7 @@ import os
 
 import global_value as g
 
+
 def read_text(name: str):
     if not os.path.isabs(name):
         name = os.path.join(g.base_dir, name)
@@ -13,8 +14,10 @@ def read_text(name: str):
     with open(name, "r", encoding="utf-8") as f:
         return f.read()
 
+
 def read_texts(name: str):
     return read_text(name).splitlines()
+
 
 def read_text_set(name: str):
     return set(read_texts(name))

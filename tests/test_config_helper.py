@@ -1,14 +1,14 @@
 import unittest
 
-from config_helper import readConfig
+from config_helper import read_config
 
 
 class TestConfigHelper(unittest.TestCase):
-    def test_readConfig(self):
+    def test_read_config(self):
         expected = {
-          "a": 1,
-          "b": "2",
-          "c": False,
+            "a": 1,
+            "b": "2",
+            "c": False,
         }
-        actual = readConfig("test_data/test_config_helper.json")
+        actual = read_config("test_data/test_config_helper.json")
         self.assertEqual(expected, actual)
