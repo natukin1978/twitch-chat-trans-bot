@@ -33,7 +33,7 @@ jobs:
         run: |
           $tagName = "${{ github.ref_name }}"
           $zipName = "ChatTransBot-$tagName.zip"
-          Compress-Archive -Path dist\ChatTransBot.exe, LICENSE, README.md, config.json -DestinationPath $zipName
+          Compress-Archive -Path dist\ChatTransBot.exe, LICENSE, README.md, config.json, exclude_words.txt -DestinationPath $zipName
 
       - name: Upload release archive
         uses: actions/upload-release-asset@v1
