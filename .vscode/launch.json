@@ -8,7 +8,7 @@
             "name": "Run & Debug",
             "type": "debugpy",
             "request": "launch",
-            "program": "chat_trans_bot.py",
+            "program": "twitch_chat_trans_bot.py",
             "console": "integratedTerminal"
         },
         {
