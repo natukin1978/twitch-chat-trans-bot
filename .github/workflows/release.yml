@@ -24,7 +24,7 @@ jobs:
           pip install -r requirements.txt
 
       - name: Build executable with PyInstaller
-        run: pyinstaller --onefile chat_trans_bot.py --name ChatTransBot.exe
+        run: pyinstaller --onefile twitch_chat_trans_bot.py --name TwitchChatTransBot.exe
 
       - name: Rename config.json
         run: ren config.json.template config.json
@@ -32,8 +32,8 @@ jobs:
       - name: Create release archive
         run: |
           $tagName = "${{ github.ref_name }}"
-          $zipName = "ChatTransBot-$tagName.zip"
-          Compress-Archive -Path dist\ChatTransBot.exe, LICENSE, README.md, config.json, exclude_words.txt -DestinationPath $zipName
+          $zipName = "TwitchChatTransBot-$tagName.zip"
+          Compress-Archive -Path dist\TwitchChatTransBot.exe, LICENSE, README.md, config.json, exclude_words.txt -DestinationPath $zipName
 
       - name: Upload release archive
         uses: actions/upload-release-asset@v1
@@ -41,6 +41,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ github.event.release.upload_url }}
-          asset_path: ./ChatTransBot-${{ github.ref_name }}.zip
-          asset_name: ChatTransBot-${{ github.ref_name }}.zip
+          asset_path: ./TwitchChatTransBot-${{ github.ref_name }}.zip
+          asset_name: TwitchChatTransBot-${{ github.ref_name }}.zip
           asset_content_type: application/zip

@@ -11,7 +11,7 @@ from twitchio.ext import commands
 
 import global_value as g
 
-g.app_name = "chat_trans_bot"
+g.app_name = "twitch_chat_trans_bot"
 g.base_dir = os.path.dirname(os.path.abspath(sys.argv[0]))
 
 from config_helper import read_config
