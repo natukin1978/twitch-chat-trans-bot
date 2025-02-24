@@ -64,3 +64,30 @@ CSVファイルを使って、ユーザー毎に読み上げ音声を変える�
 ```
 
 ※ 各種設定を変更した場合、アプリを再起動してください。
+
+## 実行
+
+実行するには以下のコマンドを実行します。
+```
+TwitchChatTransBot.exe
+```
+
+## 貢献する
+
+このソフトに貢献したい場合は、Issue を開いてアイデアを議論するか、プルリクを送信してください。
+
+ただし、このツールは私の配信のために作ったので、余計な機能は付けませんし、使わない機能は削除します。
+
+## 作者
+
+ナツキソ
+
+- X(旧Twitter): [@natukin1978](https://x.com/natukin1978)
+- Mastodon: [@natukin1978](https://mstdn.jp/@natukin1978)
+- Threads: [@natukin1978](https://www.threads.net/@natukin1978)
+- GitHub: [@natukin1978](https://github.com/natukin1978)
+- Mail: natukin1978@hotmail.com
+
+## ライセンス
+
+Twitchのチャットの外国語を翻訳するBOT は [MIT License](https://opensource.org/licenses/MIT) の下でリリースされました。
