@@ -1,5 +1,6 @@
 import asyncio
 import json
+import logging
 import os
 import random
 import sys
@@ -17,20 +18,23 @@ g.base_dir = os.path.dirname(os.path.abspath(sys.argv[0]))
 from config_helper import read_config
 from emoji_helper import get_text_without_emojis
 from exclude_words_helper import match_exclude_word, read_exclude_words
-from one_comme_users import get_nickname, read_one_comme_users
+from one_comme_users import OneCommeUsers
 from talk_voice import set_voice_effect, talk_voice
 from voice_map_helper import get_cid, read_voice_map
 
 g.config = read_config()
 
+# ロガーの設定
+logging.basicConfig(level=logging.INFO)
+
 g.voice_map = read_voice_map()
 g.exclude_words = read_exclude_words()
-g.one_comme_users = read_one_comme_users()
+g.one_comme_users = OneCommeUsers.read_one_comme_users()
 g.called_set_all_voice_effect = False
 
 
 def get_use_nickname(displayName: str) -> str:
-    nickname = get_nickname(displayName)
+    nickname = OneCommeUsers.get_nickname(displayName)
     if not nickname:
         nickname = displayName
     configH = g.config["honorifics"]
