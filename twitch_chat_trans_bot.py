@@ -3,6 +3,7 @@ import json
 import logging
 import os
 import random
+import re
 import sys
 
 import aiohttp
@@ -129,14 +130,16 @@ class Bot(commands.Bot):
         if msg.echo:
             return
 
-        if msg.content.startswith("!"):
-            await self.handle_commands(msg)
-            return
+        # コマンドかどうか調べる
+        is_cmd = msg.content.startswith("!")
 
         text = get_text_without_emojis(msg)
         user = msg.author.display_name
         cid = get_cid(user)
         nickname = get_use_nickname(user)
+
+        if is_cmd:
+            text = Bot.get_cmd_value(text)
 
         if not g.called_set_all_voice_effect:
             # 1回だけ
@@ -165,12 +168,27 @@ class Bot(commands.Bot):
             await talk_voice_with_nickname(nickname, text, cid)
             return
 
+        if is_cmd:
+            # コマンドなら翻訳しない
+            # 読み上げない
+            return
+
         translated_text = await translate(text, g.config["translate"]["target"])
         if not translated_text:
             translated_text = text
 
         await talk_voice_with_nickname(nickname, translated_text, cid)
         await msg.channel.send(f"{translated_text} [by {user}]")
+
+    @staticmethod
+    def get_cmd_value(content: str) -> str:
+        pattern = r"^![^ ]+ (.*?)$"
+        match = re.search(pattern, content)
+        if not match:
+            logger.debug("Not match: " + content)
+            return ""
+
+        return match.group(1)
 
 
 async def main():
