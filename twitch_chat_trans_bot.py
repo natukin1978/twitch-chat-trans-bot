@@ -174,6 +174,11 @@ class Bot(commands.Bot):
             return
 
         translated_text = await translate(text, g.config["translate"]["target"])
+        if translated_text == text:
+            # 翻訳前後が一致
+            await talk_voice_with_nickname(nickname, text, cid)
+            return
+
         if not translated_text:
             translated_text = text
 
