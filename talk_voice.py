@@ -1,6 +1,10 @@
+import logging
+
 import aiohttp
 
 import global_value as g
+
+logger = logging.getLogger(__name__)
 
 
 def get_basic_auth():
@@ -28,7 +32,7 @@ async def set_voice_effect(param: str, value: any, cid: int = 0):
             async with session.get(url, auth=auth) as response:
                 return await response
     except Exception as e:
-        print(e)
+        logger.error("Error! set_voice_effect {e}")
 
 
 async def talk_voice(text: str, cid: int = 0):
@@ -53,4 +57,4 @@ async def talk_voice(text: str, cid: int = 0):
             async with session.post(url, auth=auth, params=params) as response:
                 return await response
     except Exception as e:
-        print(e)
+        logger.error("Error! talk_voice {e}")
