@@ -1,4 +1,4 @@
-from typing import Any
+import urllib.parse
 
 import aiohttp
 
@@ -14,7 +14,7 @@ async def _request_voice_base(suffix_param: str) -> aiohttp.ClientResponse:
             return response
 
 
-async def set_voice_effect(param: str, value: Any, cid: int = 0) -> None:
+async def set_voice_effect(param: str, value: any, cid: int = 0) -> None:
     try:
         configAS = g.config["assistantSeika"]
         defaultCid = configAS["defaultCid"]
@@ -42,7 +42,8 @@ async def talk_voice(text: str, cid: int = 0) -> None:
             cmd = "PLAYASYNC2"
         else:
             cmd = "PLAY2"
-        suffix_param = f"{cmd}/{cid}/{text}"
+        encoded_text = urllib.parse.quote(text)
+        suffix_param = f"{cmd}/{cid}/{encoded_text}"
         await _request_voice_base(suffix_param)
     except Exception as e:
         print(e)
