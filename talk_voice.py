@@ -52,6 +52,10 @@ async def talk_voice(text: str, cid: int = 0):
         auth = get_basic_auth()
         request_body = {
             "talktext": text,
+            "effects": {
+                "speed": configAS["speed"],
+                "volume": configAS["volume"],
+            },
         }
         async with aiohttp.ClientSession() as session:
             async with session.post(url, auth=auth, json=request_body) as response:
