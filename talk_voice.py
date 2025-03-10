@@ -1,20 +1,19 @@
-import urllib.parse
-
 import aiohttp
 
 import global_value as g
 
 
-async def _request_voice_base(suffix_param: str) -> aiohttp.ClientResponse:
+def get_basic_auth():
     configAS = g.config["assistantSeika"]
-    url = f"http://{configAS['name']}:{configAS['port']}/{suffix_param}"
-    auth = aiohttp.BasicAuth(login=configAS["login"], password=configAS["password"])
-    async with aiohttp.ClientSession() as session:
-        async with session.get(url, auth=auth) as response:
-            return response
+    return aiohttp.BasicAuth(login=configAS["login"], password=configAS["password"])
 
 
-async def set_voice_effect(param: str, value: any, cid: int = 0) -> None:
+def get_base_url() -> str:
+    configAS = g.config["assistantSeika"]
+    return f"http://{configAS['name']}:{configAS['port']}"
+
+
+async def set_voice_effect(param: str, value: any, cid: int = 0):
     try:
         configAS = g.config["assistantSeika"]
         defaultCid = configAS["defaultCid"]
@@ -23,13 +22,16 @@ async def set_voice_effect(param: str, value: any, cid: int = 0) -> None:
             return
         if cid == 0:
             cid = defaultCid
-        suffix_param = f"EFFECT/{cid}/{param}/{value}"
-        await _request_voice_base(suffix_param)
+        url = get_base_url() + f"/EFFECT/{cid}/{param}/{value}"
+        auth = get_basic_auth()
+        async with aiohttp.ClientSession() as session:
+            async with session.get(url, auth=auth) as response:
+                return await response
     except Exception as e:
         print(e)
 
 
-async def talk_voice(text: str, cid: int = 0) -> None:
+async def talk_voice(text: str, cid: int = 0):
     try:
         configAS = g.config["assistantSeika"]
         defaultCid = configAS["defaultCid"]
@@ -42,8 +44,13 @@ async def talk_voice(text: str, cid: int = 0) -> None:
             cmd = "PLAYASYNC2"
         else:
             cmd = "PLAY2"
-        encoded_text = urllib.parse.quote(text)
-        suffix_param = f"{cmd}/{cid}/{encoded_text}"
-        await _request_voice_base(suffix_param)
+        url = get_base_url() + f"/{cmd}/{cid}"
+        auth = get_basic_auth()
+        params = {
+            "talktext": text,
+        }
+        async with aiohttp.ClientSession() as session:
+            async with session.post(url, auth=auth, params=params) as response:
+                return await response
     except Exception as e:
         print(e)
