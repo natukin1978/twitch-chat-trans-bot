@@ -30,7 +30,7 @@ async def set_voice_effect(param: str, value: any, cid: int = 0):
         auth = get_basic_auth()
         async with aiohttp.ClientSession() as session:
             async with session.get(url, auth=auth) as response:
-                return await response
+                return response
     except Exception as e:
         logger.error("Error! set_voice_effect {e}")
 
@@ -50,11 +50,11 @@ async def talk_voice(text: str, cid: int = 0):
             cmd = "PLAY2"
         url = get_base_url() + f"/{cmd}/{cid}"
         auth = get_basic_auth()
-        params = {
+        request_body = {
             "talktext": text,
         }
         async with aiohttp.ClientSession() as session:
-            async with session.post(url, auth=auth, params=params) as response:
-                return await response
+            async with session.post(url, auth=auth, json=request_body) as response:
+                return response
     except Exception as e:
         logger.error("Error! talk_voice {e}")
