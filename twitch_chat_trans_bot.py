@@ -31,7 +31,7 @@ logging.basicConfig(level=logging.INFO)
 g.voice_map = read_voice_map()
 g.exclude_words = read_exclude_words()
 g.one_comme_users = OneCommeUsers.read_one_comme_users()
-g.called_set_all_voice_effect = False
+# g.called_set_all_voice_effect = False
 
 
 def get_use_nickname(displayName: str) -> str:
@@ -141,10 +141,10 @@ class Bot(commands.Bot):
         if is_cmd:
             text = Bot.get_cmd_value(text)
 
-        if not g.called_set_all_voice_effect:
-            # 1回だけ
-            await set_all_voice_effect()
-            g.called_set_all_voice_effect = True
+        # if not g.called_set_all_voice_effect:
+        #    # 1回だけ
+        #    await set_all_voice_effect()
+        #    g.called_set_all_voice_effect = True
 
         if not text:
             # 本文が無い場合でも名前だけは読み上げる
