@@ -32,7 +32,7 @@ async def set_voice_effect(param: str, value: any, cid: int = 0):
             async with session.get(url, auth=auth) as response:
                 return response
     except Exception as e:
-        logger.error("Error! set_voice_effect {e}")
+        logger.error(f"Error! set_voice_effect {e}")
 
 
 async def talk_voice(text: str, cid: int = 0):
@@ -61,4 +61,4 @@ async def talk_voice(text: str, cid: int = 0):
             async with session.post(url, auth=auth, json=request_body) as response:
                 return response
     except Exception as e:
-        logger.error("Error! talk_voice {e}")
+        logger.error(f"Error! talk_voice {e}")
