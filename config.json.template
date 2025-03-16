@@ -19,8 +19,7 @@
     ]
   },
   "assistantSeika": {
-    "name": "localhost",
-    "port": 7180,
+    "baseUrl": "http://localhost:7180",
     "login": "SeikaServerUser",
     "password": "SeikaServerPassword"
   },

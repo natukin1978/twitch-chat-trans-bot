@@ -33,11 +33,15 @@ def get_basic_auth():
 
 def get_base_url() -> str:
     configAS = g.config["assistantSeika"]
-    return f"http://{configAS['name']}:{configAS['port']}"
+    return configAS["baseUrl"]
 
 
 async def talk_voice(text: str, cid: int = 0):
     try:
+        base_url = get_base_url()
+        if not base_url:
+            # URLが無効なら処理しない
+            return
         voice_json = get_voice_json()
         defaultCid = voice_json["defaultCid"]
         if not defaultCid:
@@ -49,7 +53,7 @@ async def talk_voice(text: str, cid: int = 0):
             cmd = "PLAYASYNC2"
         else:
             cmd = "PLAY2"
-        url = get_base_url() + f"/{cmd}/{cid}"
+        url = base_url + f"/{cmd}/{cid}"
         auth = get_basic_auth()
         effects = voice_json["effects"]
         voice_map = get_voice_map(voice_json, cid)
