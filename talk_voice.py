@@ -17,24 +17,6 @@ def get_base_url() -> str:
     return f"http://{configAS['name']}:{configAS['port']}"
 
 
-async def set_voice_effect(param: str, value: any, cid: int = 0):
-    try:
-        configAS = g.config["assistantSeika"]
-        defaultCid = configAS["defaultCid"]
-        if not defaultCid:
-            # デフォルトが無効なら処理しない
-            return
-        if cid == 0:
-            cid = defaultCid
-        url = get_base_url() + f"/EFFECT/{cid}/{param}/{value}"
-        auth = get_basic_auth()
-        async with aiohttp.ClientSession() as session:
-            async with session.get(url, auth=auth) as response:
-                return response
-    except Exception as e:
-        logger.error(f"Error! set_voice_effect {e}")
-
-
 async def talk_voice(text: str, cid: int = 0):
     try:
         configAS = g.config["assistantSeika"]

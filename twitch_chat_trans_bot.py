@@ -20,7 +20,7 @@ from config_helper import read_config
 from emoji_helper import get_text_without_emojis
 from exclude_words_helper import match_exclude_word, read_exclude_words
 from one_comme_users import OneCommeUsers
-from talk_voice import set_voice_effect, talk_voice
+from talk_voice import talk_voice
 from voice_map_helper import get_cid, read_voice_map
 
 g.config = read_config()
@@ -31,7 +31,6 @@ logging.basicConfig(level=logging.INFO)
 g.voice_map = read_voice_map()
 g.exclude_words = read_exclude_words()
 g.one_comme_users = OneCommeUsers.read_one_comme_users()
-# g.called_set_all_voice_effect = False
 
 
 def get_use_nickname(displayName: str) -> str:
@@ -96,17 +95,6 @@ async def translate(text: str, target: str) -> str:
     return ""
 
 
-async def set_all_voice_effect() -> None:
-    configAS = g.config["assistantSeika"]
-    set_cid = set()
-    for value in g.voice_map.values():
-        set_cid.add(value[0])
-    set_cid.add(configAS["defaultCid"])
-    for cid in set_cid:
-        await set_voice_effect("speed", configAS["speed"], cid)
-        await set_voice_effect("volume", configAS["volume"], cid)
-
-
 async def talk_voice_with_nickname(nickname: str, text: str, cid: int) -> None:
     value = text
     if not nickname:
@@ -140,11 +128,6 @@ class Bot(commands.Bot):
 
         if is_cmd:
             text = Bot.get_cmd_value(text)
-
-        # if not g.called_set_all_voice_effect:
-        #    # 1回だけ
-        #    await set_all_voice_effect()
-        #    g.called_set_all_voice_effect = True
 
         if not text:
             # 本文が無い場合でも名前だけは読み上げる
