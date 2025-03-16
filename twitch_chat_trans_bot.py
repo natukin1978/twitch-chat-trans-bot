@@ -21,6 +21,7 @@ from emoji_helper import get_text_without_emojis
 from exclude_words_helper import match_exclude_word, read_exclude_words
 from one_comme_users import OneCommeUsers
 from talk_voice import talk_voice
+from voice_map_helper import get_cid
 
 g.config = read_config()
 
