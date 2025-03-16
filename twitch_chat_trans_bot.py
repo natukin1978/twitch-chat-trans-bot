@@ -28,7 +28,6 @@ g.config = read_config()
 # ロガーの設定
 logging.basicConfig(level=logging.INFO)
 
-g.exclude_words = read_exclude_words()
 g.one_comme_users = OneCommeUsers.read_one_comme_users()
 
 
@@ -139,7 +138,8 @@ class Bot(commands.Bot):
         else:
             self.prev_nickname = nickname
 
-        if match_exclude_word(g.exclude_words, text):
+        exclude_words = read_exclude_words()
+        if match_exclude_word(exclude_words, text):
             # 除外キーワードなので翻訳しない
             await talk_voice_with_nickname(nickname, text, cid)
             return
