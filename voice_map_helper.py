@@ -14,7 +14,8 @@ def read_voice_map() -> Dict[str, Any]:
 
 
 def get_cid(displayName: str) -> int:
-    voice = g.voice_map.get(displayName, None)
+    voice_map = read_voice_map()
+    voice = voice_map.get(displayName, None)
     if not voice:
         return 0
     return voice[0]

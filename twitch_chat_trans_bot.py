@@ -21,14 +21,12 @@ from emoji_helper import get_text_without_emojis
 from exclude_words_helper import match_exclude_word, read_exclude_words
 from one_comme_users import OneCommeUsers
 from talk_voice import talk_voice
-from voice_map_helper import get_cid, read_voice_map
 
 g.config = read_config()
 
 # ロガーの設定
 logging.basicConfig(level=logging.INFO)
 
-g.voice_map = read_voice_map()
 g.exclude_words = read_exclude_words()
 g.one_comme_users = OneCommeUsers.read_one_comme_users()
 
