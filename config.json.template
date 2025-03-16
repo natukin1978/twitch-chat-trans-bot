@@ -1,7 +1,7 @@
 {
   "twitch": {
     "loginChannel": "",
-    "accessToken": "oauth:XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+    "accessToken": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
   },
   "translate": {
     "target": "ja",
@@ -19,14 +19,9 @@
     ]
   },
   "assistantSeika": {
-    "name": "localhost",
-    "port": 7180,
+    "baseUrl": "http://localhost:7180",
     "login": "SeikaServerUser",
-    "password": "SeikaServerPassword",
-    "playAsync": false,
-    "speed": 1.0,
-    "volume": 1.0,
-    "defaultCid": 0
+    "password": "SeikaServerPassword"
   },
   "honorifics": {
     "default": "さん",

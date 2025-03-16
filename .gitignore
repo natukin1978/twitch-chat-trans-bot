@@ -163,4 +163,5 @@ cython_debug/
 
 # Not managed as it is important information
 /config.json
+/voice.json
 /voice_map.csv

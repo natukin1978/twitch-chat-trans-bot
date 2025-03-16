@@ -1,0 +1,9 @@
+{
+  "defaultCid": 0,
+  "effects": {
+    "speed": 1.0,
+    "volume": 1.0
+  },
+  "playAsync": false,
+  "maps": []
+}

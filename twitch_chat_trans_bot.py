@@ -21,13 +21,13 @@ from emoji_helper import get_text_without_emojis
 from exclude_words_helper import match_exclude_word, read_exclude_words
 from one_comme_users import OneCommeUsers
 from talk_voice import talk_voice
+from voice_map_helper import get_cid
 
 g.config = read_config()
 
 # ロガーの設定
 logging.basicConfig(level=logging.INFO)
 
-g.exclude_words = read_exclude_words()
 g.one_comme_users = OneCommeUsers.read_one_comme_users()
 
 
@@ -138,7 +138,8 @@ class Bot(commands.Bot):
         else:
             self.prev_nickname = nickname
 
-        if match_exclude_word(g.exclude_words, text):
+        exclude_words = read_exclude_words()
+        if match_exclude_word(exclude_words, text):
             # 除外キーワードなので翻訳しない
             await talk_voice_with_nickname(nickname, text, cid)
             return
