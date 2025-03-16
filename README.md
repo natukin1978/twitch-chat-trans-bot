@@ -37,13 +37,55 @@
 | deepL                       | DeepLのエンドポイントやAPIキーを設定します                                           |
 | translate_gas               | GAS(Google Apps Script)の翻訳APIのURLを設定します ※1                                 |
 | assistantSeika              | 合成音声による読み上げを行いたい時の設定                                             |
-| assistantSeika.defaultCid   | キャラクターのID                                                                     |
 | honorifics.default          | 通常使用する敬称で、これをユーザー名の末尾に追加します                               |
 | honorifics.other            | その他の敬称。ユーザー名の末尾がこのリストに含まれている場合はそのまま読み上げます   |
 | oneComme.pathUsersCsv       | わんコメのユーザーリストをCSV出力したパスを指定します。(ニックネームで使用)          |
 
 ※1 Google翻訳APIを無料で作る方法
 https://qiita.com/satto_sann/items/be4177360a0bc3691fdf
+
+※ 設定を変更した場合、アプリを再起動してください。
+
+### voice.json
+
+読み上げに関する設定
+
+| キー                        | 概要                                                 |
+| --------------------------- | ---------------------------------------------------- |
+| defaultCid                  | キャラクターID <br> (0の場合、読み上げ無効化)        |
+| effects.speed               | 速度                                                 |
+| effects.volume              | 音量                                                 |
+| playAsync                   | 再生を同期するか <br> false: PLAY2, true: PLAYASYNC2 |
+| maps                        | マッピング情報                                       |
+
+#### maps
+
+特定の`cid`の読み上げ速度および音量を上書きします。
+`cid`は正規表現(完全一致)で指定する事ができます。
+
+例. VOICEVOXの速度を1.3に、AivisSpeechの音量を0.1にする
+
+```json
+"maps": [
+  {
+    "cid": "5....",
+    "effects": {
+      "speed": 1.3
+    }
+  },
+  {
+    "cid": "2.....",
+    "effects": {
+      "volume": 0.1
+    }
+  }
+]
+```
+
+配列になっているため複数の設定が可能です。
+マッチングは上から順に評価される事を留意してください。
+
+※ この設定は変更後に再起動の必要がありません。
 
 ### exclude_words.txt
 
@@ -52,6 +94,8 @@ https://qiita.com/satto_sann/items/be4177360a0bc3691fdf
 - 完全一致で指定します
 - 大文字・小文字及び全角半角を区別しません
 - 正規表現での指定が可能です
+
+※ この設定は変更後に再起動の必要がありません。
 
 ### voice_map.csv
 
@@ -63,7 +107,7 @@ CSVファイルを使って、ユーザー毎に読み上げ音声を変える�
 電脳娘フユカ,90181
 ```
 
-※ 各種設定を変更した場合、アプリを再起動してください。
+※ この設定は変更後に再起動の必要がありません。
 
 ## 実行
 
