@@ -28,18 +28,18 @@
 
 ### config.json
 
-| キー                        | 概要                                                                                 |
-| --------------------------- | ------------------------------------------------------------------------------------ |
-| twitch.loginChannel         | ログインする対象のチャンネル                                                         |
-| twitch.accessToken          | 翻訳結果をコメントするユーザーのOAuthトークン https://twitchapps.com/tmi/            |
-| translate.target            | 翻訳結果の言語(つまり母国語)                                                         |
-| translate.service           | 使用する翻訳サービス(`deepL`もしくは`translate_gas`)                                 |
-| deepL                       | DeepLのエンドポイントやAPIキーを設定します                                           |
-| translate_gas               | GAS(Google Apps Script)の翻訳APIのURLを設定します ※1                                 |
-| assistantSeika              | 合成音声による読み上げを行いたい時の設定                                             |
-| honorifics.default          | 通常使用する敬称で、これをユーザー名の末尾に追加します                               |
-| honorifics.other            | その他の敬称。ユーザー名の末尾がこのリストに含まれている場合はそのまま読み上げます   |
-| oneComme.pathUsersCsv       | わんコメのユーザーリストをCSV出力したパスを指定します。(ニックネームで使用)          |
+| キー                  | 概要                                                                                                      |
+|-----------------------|-----------------------------------------------------------------------------------------------------------|
+| twitch.loginChannel   | ログインする対象のチャンネル                                                                              |
+| twitch.accessToken    | 翻訳結果をコメントするユーザーのOAuthトークン <br> https://natukin1978.github.io/natsu-bot-auth-receiver/ |
+| translate.target      | 翻訳結果の言語(つまり母国語)                                                                              |
+| translate.service     | 使用する翻訳サービス(`deepL`もしくは`translate_gas`)                                                      |
+| deepL                 | DeepLのエンドポイントやAPIキーを設定します                                                                |
+| translate_gas         | GAS(Google Apps Script)の翻訳APIのURLを設定します ※1                                                      |
+| assistantSeika        | 合成音声による読み上げを行いたい時の設定                                                                  |
+| honorifics.default    | 通常使用する敬称で、これをユーザー名の末尾に追加します                                                    |
+| honorifics.other      | その他の敬称。ユーザー名の末尾がこのリストに含まれている場合はそのまま読み上げます                        |
+| oneComme.pathUsersCsv | わんコメのユーザーリストをCSV出力したパスを指定します。(ニックネームで使用)                               |
 
 ※1 Google翻訳APIを無料で作る方法
 https://qiita.com/satto_sann/items/be4177360a0bc3691fdf
@@ -50,13 +50,13 @@ https://qiita.com/satto_sann/items/be4177360a0bc3691fdf
 
 読み上げに関する設定
 
-| キー                        | 概要                                                 |
-| --------------------------- | ---------------------------------------------------- |
-| defaultCid                  | キャラクターID <br> (0の場合、読み上げ無効化)        |
-| effects.speed               | 速度                                                 |
-| effects.volume              | 音量                                                 |
-| playAsync                   | 再生を同期するか <br> false: PLAY2, true: PLAYASYNC2 |
-| maps                        | マッピング情報                                       |
+| キー           | 概要                                                 |
+|----------------|------------------------------------------------------|
+| defaultCid     | キャラクターID <br> (0の場合、読み上げ無効化)        |
+| effects.speed  | 速度                                                 |
+| effects.volume | 音量                                                 |
+| playAsync      | 再生を同期するか <br> false: PLAY2, true: PLAYASYNC2 |
+| maps           | マッピング情報                                       |
 
 #### maps
 
