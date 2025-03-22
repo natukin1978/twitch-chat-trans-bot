@@ -5,6 +5,7 @@ import aiohttp
 
 import global_value as g
 from config_helper import read_config
+from hankaku_to_zenkaku import hankaku_to_zenkaku_symbols
 
 logger = logging.getLogger(__name__)
 
@@ -60,7 +61,7 @@ async def talk_voice(text: str, cid: int = 0):
         if voice_map:
             effects |= voice_map["effects"]
         request_body = {
-            "talktext": text,
+            "talktext": hankaku_to_zenkaku_symbols(text),
             "effects": effects,
         }
         async with aiohttp.ClientSession() as session:
