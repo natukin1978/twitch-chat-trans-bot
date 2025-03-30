@@ -20,6 +20,7 @@ from config_helper import read_config
 from emoji_helper import get_text_without_emojis
 from exclude_words_helper import match_exclude_word, read_exclude_words
 from one_comme_users import OneCommeUsers
+from rename_map_helper import read_rename_map
 from talk_voice import talk_voice
 from voice_map_helper import get_cid
 
@@ -32,7 +33,18 @@ g.one_comme_users = OneCommeUsers.read_one_comme_users()
 
 
 def get_use_nickname(displayName: str) -> str:
-    nickname = OneCommeUsers.get_nickname(displayName)
+    # ニックネームの優先度は rename_map.csv > わんコメCSV
+    nickname = None
+    rename_map = read_rename_map()
+    if rename_map:
+        rename = rename_map.get(displayName, None)
+        if rename is not None:
+            nickname = rename[0]
+            if not nickname:
+                return ""
+
+    if nickname is None:
+        nickname = OneCommeUsers.get_nickname(displayName)
     if not nickname:
         nickname = displayName
     configH = g.config["honorifics"]
