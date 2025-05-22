@@ -1,5 +1,6 @@
 import global_value as g
 from csv_helper import read_csv_to_list
+from dict_helper import get_first_non_none_value
 
 
 class OneCommeUsers:
@@ -20,15 +21,19 @@ class OneCommeUsers:
             filter(lambda row: row[1] == displayName, g.one_comme_users)
         )
         for filtered_row in filtered_rows:
-            return filtered_row[4]
+            nickname = filtered_row[4]
+            if nickname:
+                return nickname
 
         return None
 
     @staticmethod
     def update_nickname(json_data: dict[str, any]) -> None:
         nickname = OneCommeUsers.get_nickname(json_data["displayName"])
-        if nickname:
-            json_data["nickname"] = nickname
+        if not nickname:
+            nickname = get_first_non_none_value(json_data, ["displayName", "id"])
+
+        json_data["nickname"] = nickname
 
     @staticmethod
     def update_is_first_on_stream(json_data: dict[str, any]) -> None:
