@@ -29,8 +29,6 @@ g.config = read_config()
 # ロガーの設定
 logging.basicConfig(level=logging.INFO)
 
-g.one_comme_users = OneCommeUsers.read_one_comme_users()
-
 
 def get_use_nickname(displayName: str) -> str:
     # ニックネームの優先度は rename_map.csv > わんコメCSV
