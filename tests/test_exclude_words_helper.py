@@ -28,6 +28,18 @@ class TestExcludeWordsHelper(unittest.TestCase):
         self.assertFalse(match_exclude_word(exclude_words, "ｇｇｇ"))
         self.assertFalse(match_exclude_word(exclude_words, "ＧＧＧ"))
 
+    def test_match_exclude_word_ok(self):
+        exclude_words = ["ok.?"]
+        self.assertFalse(match_exclude_word(exclude_words, ""))
+        self.assertFalse(match_exclude_word(exclude_words, "o"))
+        self.assertFalse(match_exclude_word(exclude_words, "k"))
+        self.assertTrue(match_exclude_word(exclude_words, "ok"))
+        self.assertTrue(match_exclude_word(exclude_words, "OK"))
+        self.assertTrue(match_exclude_word(exclude_words, "ok."))
+        self.assertTrue(match_exclude_word(exclude_words, "OK."))
+        self.assertFalse(match_exclude_word(exclude_words, "ok desu"))
+        self.assertFalse(match_exclude_word(exclude_words, "ok arigato"))
+
     def test_match_exclude_word_w(self):
         exclude_words = ["w+", "草"]
         self.assertFalse(match_exclude_word(exclude_words, ""))
