@@ -1,7 +1,6 @@
 import os
 from typing import Any, Dict
 
-import global_value as g
 from csv_helper import read_csv_to_list
 
 
