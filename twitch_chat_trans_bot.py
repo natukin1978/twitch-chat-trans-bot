@@ -19,6 +19,7 @@ g.base_dir = os.path.dirname(os.path.abspath(sys.argv[0]))
 from config_helper import read_config
 from emoji_helper import get_text_without_emojis
 from exclude_words_helper import match_exclude_word, read_exclude_words
+from replace_words_helper import match_replace_word, read_replace_words
 from one_comme_users import OneCommeUsers
 from rename_map_helper import read_rename_map
 from talk_voice import talk_voice
@@ -147,6 +148,9 @@ class Bot(commands.Bot):
             nickname = ""
         else:
             self.prev_nickname = nickname
+
+        replace_words = read_replace_words()
+        text = match_replace_word(replace_words, text)
 
         exclude_words = read_exclude_words()
         if match_exclude_word(exclude_words, text):
