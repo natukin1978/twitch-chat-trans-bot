@@ -30,6 +30,9 @@ g.config = read_config()
 # ロガーの設定
 logging.basicConfig(level=logging.INFO)
 
+configH = g.config["honorifics"]
+configH["other"].append(configH["default"])
+
 
 def get_use_nickname(displayName: str) -> str:
     # ニックネームの優先度は rename_map.csv > わんコメCSV
@@ -46,6 +49,7 @@ def get_use_nickname(displayName: str) -> str:
         nickname = OneCommeUsers.get_nickname(displayName)
     if not nickname:
         nickname = displayName
+    # 必要なら敬称を付加する
     configH = g.config["honorifics"]
     if not next(filter(lambda x: nickname.endswith(x), configH["other"]), None):
         nickname += configH["default"]
