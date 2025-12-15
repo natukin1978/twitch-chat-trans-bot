@@ -10,7 +10,7 @@
 
 ※ 要 AssistantSeika
 
-- COEIROINK, AivisSpeechなどの合成音声の読み上げを行います
+- VOICEVOX, COEIROINKなどの合成音声での読み上げを行います
 - 翻訳された場合、翻訳結果のみ読み上げを行います
 - 同じ人が連続で発言した場合、お名前の読み上げを省略します
 - ユーザー毎に読み上げ音声を変える事もできます
@@ -30,7 +30,7 @@
 
 | キー                  | 概要                                                                                                      |
 |-----------------------|-----------------------------------------------------------------------------------------------------------|
-| twitch.loginChannel   | ログインする対象のチャンネル                                                                              |
+| twitch.loginChannel   | コメントを監視するチャンネル (半角英数字)                                                                 |
 | twitch.accessToken    | 翻訳結果をコメントするユーザーのOAuthトークン <br> https://natukin1978.github.io/natsu-bot-auth-receiver/ |
 | translate.target      | 翻訳結果の言語(つまり母国語)                                                                              |
 | translate.service     | 使用する翻訳サービス(`deepL`もしくは`translate_gas`)                                                      |
@@ -167,10 +167,9 @@ TwitchChatTransBot.exe
 
 ## 作者
 
-ナツキソ
+空夢(そらゆめ)ナツキ
 
 - X(旧Twitter): [@natukin1978](https://x.com/natukin1978)
-- Mastodon: [@natukin1978](https://mstdn.jp/@natukin1978)
 - Threads: [@natukin1978](https://www.threads.net/@natukin1978)
 - GitHub: [@natukin1978](https://github.com/natukin1978)
 - Mail: natukin1978@hotmail.com
