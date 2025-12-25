@@ -12,9 +12,14 @@ import twitchio
 from twitchio.ext import commands
 
 import global_value as g
+from logging_setup import setup_app_logging
 
 g.app_name = "twitch_chat_trans_bot"
 g.base_dir = os.path.dirname(os.path.abspath(sys.argv[0]))
+
+# ロガーの設定
+setup_app_logging(log_file_path=f"{g.app_name}.log")
+logger = logging.getLogger(__name__)
 
 from config_helper import read_config
 from emoji_helper import get_text_without_emojis
@@ -26,9 +31,6 @@ from talk_voice import talk_voice
 from voice_map_helper import get_cid
 
 g.config = read_config()
-
-# ロガーの設定
-logging.basicConfig(level=logging.INFO)
 
 configH = g.config["honorifics"]
 configH["other"].append(configH["default"])
