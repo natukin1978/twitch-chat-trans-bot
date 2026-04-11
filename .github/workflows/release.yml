@@ -24,7 +24,7 @@ jobs:
           pip install -r requirements.txt
 
       - name: Build executable with PyInstaller
-        run: pyinstaller twitch_chat_trans_bot.py --name TwitchChatTransBot.exe
+        run: pyinstaller main.py --name TwitchChatTransBot.exe
 
       - name: Rename json.template
         run: |
