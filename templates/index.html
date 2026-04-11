@@ -35,10 +35,10 @@
                 <fieldset>
                     <legend>TwitchのBOTアカウントでログインして「許可」してください。</legend>
                     <a
-                        href="http://localhost:4343/oauth?scopes=user:read:chat%20user:write:chat%20user:bot&force_verify=true"
+                        href="{{CALLBACK_URL_BOT}}"
                         target="_blank" rel="noopener noreferrer"
                     >
-                        http://localhost:4343/oauth?scopes=user:read:chat%20user:write:chat%20user:bot&force_verify=true
+                        {{CALLBACK_URL_BOT}}
                     </a>
                 </fieldset>
             </div>
@@ -46,10 +46,10 @@
                 <fieldset>
                     <legend>Twitchの配信チャンネルアカウントでログインして「許可」してください。</legend>
                     <a
-                        href="http://localhost:4343/oauth?scopes=channel:bot&force_verify=true"
+                        href="{{CALLBACK_URL_OWNER}}"
                         target="_blank" rel="noopener noreferrer"
                     >
-                        http://localhost:4343/oauth?scopes=channel:bot&force_verify=true
+                        {{CALLBACK_URL_OWNER}}
                     </a>
                 </fieldset>
             </div>

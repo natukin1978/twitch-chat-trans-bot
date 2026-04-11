@@ -5,6 +5,7 @@ import sys
 
 import asqlite
 
+import constants
 import global_value as g
 from config_helper import read_config
 from logging_setup import setup_app_logging
@@ -47,10 +48,10 @@ async def main():
             print("Webブラウザで以下に表示されているアドレスにアクセスしてください。")
             print("")
             print("TwitchのBOTアカウントでログインして「許可」してください。")
-            print("http://localhost:4343/oauth?scopes=user:read:chat%20user:write:chat%20user:bot&force_verify=true")
+            print(constants.CALLBACK_URL_BOT)
             print("")
             print("Twitchの配信チャンネルアカウントでログインして「許可」してください。")
-            print("http://localhost:4343/oauth?scopes=channel:bot&force_verify=true")
+            print(constants.CALLBACK_URL_OWNER)
             print("")
 
         await bot.start(load_tokens=False)

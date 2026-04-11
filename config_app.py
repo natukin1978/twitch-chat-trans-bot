@@ -11,6 +11,7 @@ from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
+import constants
 import global_value as g
 from config_helper import read_config, read_json, write_config
 from json_editor_helper import sort_dict_by_schema
@@ -23,6 +24,10 @@ g.base_dir = os.path.dirname(os.path.abspath(sys.argv[0]))
 app = FastAPI()
 app.mount("/images", StaticFiles(directory="images", html=True), name="images")
 templates = Jinja2Templates(directory=get_resource_path("templates"))
+templates.env.globals.update(
+    CALLBACK_URL_BOT=constants.CALLBACK_URL_BOT,
+    CALLBACK_URL_OWNER=constants.CALLBACK_URL_OWNER,
+)
 
 CONFIG_FILE = "config.json"
 SCHEMA_FILE = "schema.json"
