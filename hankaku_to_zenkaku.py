@@ -1,4 +1,3 @@
-import unicodedata
 
 # 半角記号を全角記号に変換する変換テーブル
 HANKAKU_TO_ZENKAKU_MAP = {

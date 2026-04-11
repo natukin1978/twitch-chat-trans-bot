@@ -1,4 +1,3 @@
-import os
 from typing import Any, Dict
 
 from csv_helper import read_csv_to_list
