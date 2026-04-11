@@ -1,3 +1,4 @@
+import logging
 import random
 
 import aiohttp
@@ -7,6 +8,7 @@ from one_comme_users import OneCommeUsers
 from rename_map_helper import read_rename_map
 from talk_voice import talk_voice
 
+logger = logging.getLogger(__name__)
 
 def get_use_nickname(displayName: str) -> str:
     # ニックネームの優先度は rename_map.csv > わんコメCSV
@@ -34,8 +36,8 @@ def get_random_value() -> str:
     service = g.config["translate"]["service"]
     if service == "deepL":
         values = g.config["deepL"]["apiKey"]
-    if service == "translate_gas":
-        values = g.config["translate_gas"]["url"]
+    if service == "translateGas":
+        values = g.config["translateGas"]["url"]
     i = random.randrange(len(values))
     return values[i]
 
@@ -54,7 +56,7 @@ async def translate_deepL(text: str, target: str) -> str:
                 result = await response.json()
                 return result["translations"][0]["text"]
     except Exception as e:
-        print(e)
+        logger.error(e)
         return ""
 
 
@@ -69,7 +71,7 @@ async def translate_gas(text: str, target: str) -> str:
                 result = await response.json()
                 return result["text"]
     except Exception as e:
-        print(e)
+        logger.error(e)
         return ""
 
 
@@ -77,7 +79,7 @@ async def translate(text: str, target: str) -> str:
     service = g.config["translate"]["service"]
     if service == "deepL":
         return await translate_deepL(text, target)
-    if service == "translate_gas":
+    if service == "translateGas":
         return await translate_gas(text, target)
     return ""
 
