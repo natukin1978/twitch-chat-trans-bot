@@ -164,7 +164,8 @@ class MyComponent(commands.Component):
 
         # 前後の余計な空白を整える
         text = text.strip()
-        if not text:
+        if text.startswith("/"):
+            # モデレーターコマンドはスキップ
             return
 
         user = payload.chatter.display_name
@@ -196,11 +197,6 @@ class MyComponent(commands.Component):
             # 母国語と同じ
             await talk_voice_with_nickname(nickname, text, cid)
             return
-
-        # if is_cmd:
-        #     # コマンドなら翻訳しない
-        #     # 読み上げない
-        #     return
 
         translated_text = await translate(text, g.config["translate"]["target"])
         if translated_text == text:
