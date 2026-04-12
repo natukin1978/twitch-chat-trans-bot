@@ -1,0 +1,236 @@
+{
+  "type": "object",
+  "title": "配信ボット総合設定",
+  "properties": {
+    "logLevel": {
+      "type": "string",
+      "title": "ログ出力レベル",
+      "description": "コンソールに出力する情報の詳細度。通常は WARNING を推奨。",
+      "propertyOrder": 1,
+      "enum": [
+        "DEBUG",
+        "INFO",
+        "WARNING",
+        "ERROR"
+      ]
+    },
+    "twitch": {
+      "type": "object",
+      "title": "Twitch 連携設定",
+      "description": "Twitch APIおよびボット/配信チャンネルのアカウント情報。",
+      "propertyOrder": 2,
+      "properties": {
+        "clientId": {
+          "type": "string",
+          "title": "クライアントID",
+          "propertyOrder": 1
+        },
+        "clientSecret": {
+          "type": "string",
+          "title": "シークレットキー",
+          "format": "password",
+          "propertyOrder": 2
+        },
+        "bot": {
+          "type": "object",
+          "title": "ボットアカウント",
+          "propertyOrder": 3,
+          "properties": {
+            "name": {
+              "type": "string",
+              "title": "ボット名",
+              "propertyOrder": 1
+            },
+            "id": {
+              "type": "string",
+              "title": "ボットID",
+              "readOnly": true,
+              "propertyOrder": 2
+            }
+          }
+        },
+        "owner": {
+          "type": "object",
+          "title": "配信チャンネルアカウント",
+          "propertyOrder": 4,
+          "properties": {
+            "name": {
+              "type": "string",
+              "title": "配信チャンネル名",
+              "propertyOrder": 1
+            },
+            "id": {
+              "type": "string",
+              "title": "配信チャンネルID",
+              "readOnly": true,
+              "propertyOrder": 2
+            }
+          }
+        },
+        "getIds": {
+          "format": "button",
+          "options": {
+            "button": {
+              "text": "ボットIDと配信チャンネルIDを取得",
+              "icon": "search",
+              "action": "getIds",
+              "validated": true
+            }
+          }
+        }
+      }
+    },
+    "translate": {
+      "type": "object",
+      "title": "翻訳設定",
+      "propertyOrder": 3,
+      "properties": {
+        "target": {
+          "type": "string",
+          "title": "母国語",
+          "propertyOrder": 1
+        },
+        "service": {
+          "type": "string",
+          "title": "翻訳サービス",
+          "description": "Translate GASを使う場合は、〝Google翻訳APIを無料で作る方法〟https://qiita.com/satto_sann/items/be4177360a0bc3691fdf",
+          "enum": [
+            "deepL",
+            "translateGas"
+          ],
+          "format": "radio",
+          "options": {
+            "enum_titles": [
+              "DeepL",
+              "Translate GAS"
+            ]
+          },
+          "propertyOrder": 2
+        }
+      }
+    },
+    "deepL": {
+      "type": "object",
+      "title": "DeepL 設定",
+      "propertyOrder": 4,
+      "properties": {
+        "endpoint": {
+          "type": "string",
+          "title": "エンドポイント",
+          "propertyOrder": 1
+        },
+        "apiKey": {
+          "type": "array",
+          "title": "API Keys",
+          "format": "table",
+          "items": {
+            "type": "string",
+            "title": "API Key"
+          },
+          "propertyOrder": 2
+        }
+      },
+      "options": {
+        "collapsed": true
+      }
+    },
+    "translateGas": {
+      "type": "object",
+      "title": "Translate GAS(Google Apps Script) 設定",
+      "propertyOrder": 5,
+      "properties": {
+        "url": {
+          "type": "array",
+          "title": "URLs",
+          "format": "table",
+          "items": {
+            "type": "string",
+            "title": "URL"
+          },
+          "propertyOrder": 1
+        }
+      },
+      "options": {
+        "collapsed": true
+      }
+    },
+    "honorifics": {
+      "type": "object",
+      "title": "敬称設定",
+      "description": "お名前の末尾に付けたい敬称。〝他の敬称〟の候補が付いている場合は付加しません。",
+      "propertyOrder": 6,
+      "properties": {
+        "default": {
+          "type": "string",
+          "title": "通常",
+          "propertyOrder": 1
+        },
+        "other": {
+          "type": "array",
+          "title": "他の敬称",
+          "format": "table",
+          "items": {
+            "type": "string",
+            "title": "候補"
+          },
+          "propertyOrder": 2
+        }
+      }
+    },
+    "assistantSeika": {
+      "type": "object",
+      "title": "Assistant Seika 設定",
+      "description": "音声合成ソフトを操作・制御するソフトで読み上げます。（オプション）",
+      "propertyOrder": 7,
+      "properties": {
+        "baseUrl": {
+          "type": "string",
+          "title": "ベースURL",
+          "description": "通常は\"http://localhost:7180\"。あなたの環境に適宜合わせる。",
+          "propertyOrder": 1
+        },
+        "login": {
+          "type": "string",
+          "title": "ログインユーザー",
+          "propertyOrder": 2
+        },
+        "password": {
+          "type": "string",
+          "title": "パスワード",
+          "format": "password",
+          "propertyOrder": 3
+        }
+      },
+      "options": {
+        "collapsed": true
+      }
+    },
+    "oneComme": {
+      "type": "object",
+      "title": "わんコメ (OneComme) 連携",
+      "propertyOrder": 8,
+      "properties": {
+        "pathUsersCsv": {
+          "type": "string",
+          "title": "users.csv パス",
+          "description": "わんコメのユーザーデータ保存先パス。",
+          "propertyOrder": 1
+        },
+        "selectCsvPath": {
+          "format": "button",
+          "options": {
+            "button": {
+              "text": "ファイルを選択",
+              "icon": "folder-open",
+              "action": "selectCsvPath",
+              "validated": true
+            }
+          }
+        }
+      },
+      "options": {
+        "collapsed": true
+      }
+    }
+  }
+}

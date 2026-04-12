@@ -1,7 +1,16 @@
 {
+  "logLevel": "WARNING",
   "twitch": {
-    "loginChannel": "",
-    "accessToken": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+    "clientId": "",
+    "clientSecret": "",
+    "bot": {
+      "name": "",
+      "id": ""
+    },
+    "owner": {
+      "name": "",
+      "id": ""
+    }
   },
   "translate": {
     "target": "ja",
@@ -10,18 +19,13 @@
   "deepL": {
     "endpoint": "https://api-free.deepl.com/v2/translate",
     "apiKey": [
-      "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX:fx"
+      ""
     ]
   },
-  "translate_gas": {
+  "translateGas": {
     "url": [
-      "https://script.google.com/macros/s/XXXXXXX_XXXXXX-XXXXX_XXXXX-XXXXXXXXXXXXXXXXXXX-XXXXXXXXXXXXXXXX-XXXXXXXX/exec"
+      ""
     ]
-  },
-  "assistantSeika": {
-    "baseUrl": "http://localhost:7180",
-    "login": "SeikaServerUser",
-    "password": "SeikaServerPassword"
   },
   "honorifics": {
     "default": "さん",
@@ -37,6 +41,11 @@
       "君",
       "長"
     ]
+  },
+  "assistantSeika": {
+    "baseUrl": "",
+    "login": "SeikaServerUser",
+    "password": "SeikaServerPassword"
   },
   "oneComme": {
     "pathUsersCsv": ""

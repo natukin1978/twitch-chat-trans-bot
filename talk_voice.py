@@ -23,7 +23,7 @@ def get_voice_map(voice_json, cid: int):
             if re.fullmatch(pattern, cid_str):
                 return voice_map
         return None
-    except:
+    except Exception:
         return None
 
 
