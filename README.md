@@ -24,18 +24,22 @@
 
 ## 設定
 
-※ JSONファイルを編集する場合、JSON形式をサポートしているテキストエディタの使用を推奨します。
+`ConfigApp.exe`を実行して入力を進める事で設定する事ができます。(最後に「保存」をお忘れなく)
+
+※ JSONファイルを直接編集する場合、JSON形式をサポートしているテキストエディタの使用を推奨します。
 
 ### config.json
 
 | キー                  | 概要                                                                                                      |
 |-----------------------|-----------------------------------------------------------------------------------------------------------|
-| twitch.loginChannel   | コメントを監視するチャンネル (半角英数字)                                                                 |
-| twitch.accessToken    | 翻訳結果をコメントするユーザーのOAuthトークン <br> https://natukin1978.github.io/natsu-bot-auth-receiver/ |
+| twitch.clientId       | クライアントID                                                                                            |
+| twitch.clientSecret   | シークレットキー                                                                                          |
+| twitch.bot            | BOT情報                                                                                                   |
+| twitch.owner          | 配信チャンネル情報                                                                                        |
 | translate.target      | 翻訳結果の言語(つまり母国語)                                                                              |
-| translate.service     | 使用する翻訳サービス(`deepL`もしくは`translate_gas`)                                                      |
+| translate.service     | 使用する翻訳サービス(`deepL`もしくは`translateGas`)                                                       |
 | deepL                 | DeepLのエンドポイントやAPIキーを設定します                                                                |
-| translate_gas         | GAS(Google Apps Script)の翻訳APIのURLを設定します ※1                                                      |
+| translateGas          | GAS(Google Apps Script)の翻訳APIのURLを設定します ※1                                                      |
 | assistantSeika        | 合成音声による読み上げを行いたい時の設定                                                                  |
 | honorifics.default    | 通常使用する敬称で、これをユーザー名の末尾に追加します                                                    |
 | honorifics.other      | その他の敬称。ユーザー名の末尾がこのリストに含まれている場合はそのまま読み上げます                        |
@@ -169,9 +173,7 @@ TwitchChatTransBot.exe
 
 空夢(そらゆめ)ナツキ
 
-- X(旧Twitter): [@natukin1978](https://x.com/natukin1978)
-- Threads: [@natukin1978](https://www.threads.net/@natukin1978)
-- GitHub: [@natukin1978](https://github.com/natukin1978)
+- プロフィールリンク: [@natukiso](https://profu.link/u/natukiso)
 - Mail: natukin1978@hotmail.com
 
 ## ライセンス
