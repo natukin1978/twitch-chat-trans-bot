@@ -44,14 +44,17 @@ def get_random_value() -> str:
 
 async def translate_deepL(text: str, target: str) -> str:
     try:
-        param = {
-            "auth_key": get_random_value(),
-            "text": text,
+        headers = {
+            "Authorization": "DeepL-Auth-Key " + get_random_value(),
+            "Content-Type": "application/json",
+        }
+        data = {
+            "text": [text],
             "target_lang": target,
         }
         async with aiohttp.ClientSession() as session:
             async with session.post(
-                g.config["deepL"]["endpoint"], params=param
+                g.config["deepL"]["endpoint"], headers=headers, json=data
             ) as response:
                 result = await response.json()
                 return result["translations"][0]["text"]
