@@ -1,11 +1,15 @@
-from typing import Any, Dict
-
-from csv_helper import read_csv_to_list
+from config_helper import read_config
 
 
-def read_rename_map() -> Dict[str, Any]:
-    items = read_csv_to_list("rename_map.csv")
-    result = {}
-    for item in items:
-        result[item[0]] = item[1:]
+def read_rename_map(name: str = "rename_map.json"):
+    result = read_config(name)
+    if not result:
+        return []
     return result
+
+
+def get_nickname(rename_map, displayName: str) -> str | None:
+    rename = next(filter(lambda x: x["from"] == displayName, rename_map), None)
+    if rename is None:
+        return None
+    return rename["to"]
