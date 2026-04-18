@@ -8,6 +8,10 @@ class TestExcludeWordsHelper(unittest.TestCase):
         actual = read_exclude_words()  # わざと存在しないファイルを指定
         self.assertEqual([], actual)
 
+    def test_read_exclude_words(self):
+        actual = read_exclude_words("test_data/exclude_words.json")
+        self.assertEqual(['gg', 'nf', 'ok.?', 'ng.?', 'w+', '草', '[0-9]+'], actual)
+
     def test_match_exclude_word_gg(self):
         exclude_words = ["gg"]
         self.assertFalse(match_exclude_word(exclude_words, ""))
