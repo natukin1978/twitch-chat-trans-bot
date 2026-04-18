@@ -22,9 +22,6 @@ from twitch_bot import (
     setup_database,
 )
 
-configH = g.config["honorifics"]
-configH["other"].append(configH["default"])
-
 
 async def main():
     # conduit_id の警告を抑止したい…
