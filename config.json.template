@@ -27,21 +27,6 @@
       ""
     ]
   },
-  "honorifics": {
-    "default": "さん",
-    "other": [
-      "ちゃん",
-      "さま",
-      "くん",
-      "たん",
-      "にぃ",
-      "ねぇ",
-      "やん",
-      "様",
-      "君",
-      "長"
-    ]
-  },
   "assistantSeika": {
     "baseUrl": "",
     "login": "SeikaServerUser",
