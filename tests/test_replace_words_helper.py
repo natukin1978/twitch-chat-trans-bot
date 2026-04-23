@@ -9,11 +9,11 @@ class TestExcludeWordsHelper(unittest.TestCase):
         self.assertEqual({}, actual)
 
     def test_read_replace_words(self):
-        actual = read_replace_words("test_data/replace_words.csv")
-        self.assertEqual([["888+", "ぱちぱちぱち"]], actual)
+        actual = read_replace_words("test_data/replace_words.json")
+        self.assertEqual([{'from': '888+', 'to': 'ぱちぱちぱち'}], actual)
 
     def test_match_replace_word_888(self):
-        replace_words = [["888+", "ぱちぱちぱち"]]
+        replace_words = [{'from': '888+', 'to': 'ぱちぱちぱち'}]
         self.assertEqual("", match_replace_word(replace_words, ""))
         self.assertEqual("8", match_replace_word(replace_words, "8"))
         self.assertEqual("88", match_replace_word(replace_words, "88"))

@@ -59,7 +59,7 @@ async def index(request: Request):
 
     return templates.TemplateResponse(
         request=request,
-        name="index.html",
+        name="config.html",
         context={
             "config": config_data,
             "schema": schema_data,

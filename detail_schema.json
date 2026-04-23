@@ -1,0 +1,177 @@
+{
+  "type": "object",
+  "title": "詳細設定",
+  "properties": {
+    "honorifics.json": {
+      "type": "object",
+      "title": "敬称設定",
+      "description": "お名前の末尾に付けたい敬称。〝他の敬称〟の候補が付いている場合は付加しません。",
+      "propertyOrder": 2,
+      "properties": {
+        "default": {
+          "type": "string",
+          "title": "通常",
+          "propertyOrder": 1
+        },
+        "other": {
+          "type": "array",
+          "title": "他の敬称",
+          "format": "table",
+          "items": {
+            "type": "string",
+            "title": "候補"
+          },
+          "propertyOrder": 2
+        }
+      }
+    },
+    "exclude_words.json": {
+      "type": "array",
+      "title": "除外ワード設定",
+      "description": "翻訳させないワード。正規表現で完全一致する必要あります。",
+      "propertyOrder": 3,
+      "format": "table",
+      "items": {
+        "type": "string",
+        "title": "除外ワード"
+      }
+    },
+    "replace_words.json": {
+      "type": "array",
+      "title": "置換ワード設定",
+      "description": "置換する言葉。正規表現で完全一致する必要あります。",
+      "propertyOrder": 4,
+      "format": "table",
+      "items": {
+        "type": "object",
+        "title": "置換ワード",
+        "properties": {
+          "from": {
+            "type": "string",
+            "title": "変換元",
+            "propertyOrder": 1
+          },
+          "to": {
+            "type": "string",
+            "title": "変換後",
+            "propertyOrder": 2
+          }
+        }
+      }
+    },
+    "voice.json": {
+      "type": "object",
+      "title": "ボイス設定",
+      "description": "※ 読み上げ有効時のみ",
+      "propertyOrder": 5,
+      "properties": {
+        "defaultCid": {
+          "type": "integer",
+          "title": "通常のCID",
+          "propertyOrder": 1
+        },
+        "effects": {
+          "type": "object",
+          "title": "通常のエフェクト",
+          "propertyOrder": 2,
+          "properties": {
+            "speed": {
+              "type": "number",
+              "title": "速度",
+              "propertyOrder": 1
+            },
+            "volume": {
+              "type": "number",
+              "title": "音量",
+              "propertyOrder": 2
+            }
+          }
+        },
+        "maps": {
+          "type": "array",
+          "title": "個別のエフェクト",
+          "propertyOrder": 3,
+          "format": "categories",
+          "items": {
+            "type": "object",
+            "properties": {
+              "cid": {
+                "type": "string",
+                "title": "cid",
+                "description": "正規表現で完全一致する必要あります。",
+                "grid_columns": 4
+              },
+              "effects": {
+                "type": "object",
+                "title": "エフェクト設定",
+                "grid_columns": 8,
+                "properties": {
+                  "speed": {
+                    "type": "number",
+                    "title": "速度",
+                    "grid_columns": 6
+                  },
+                  "volume": {
+                    "type": "number",
+                    "title": "音量",
+                    "grid_columns": 6
+                  }
+                }
+              }
+            }
+          }
+        },
+        "playAsync": {
+          "type": "boolean",
+          "title": "再生同期",
+          "propertyOrder": 4
+        }
+      }
+    },
+    "rename_map.json": {
+      "type": "array",
+      "title": "ニックネーム設定",
+      "description": "※ 読み上げ有効時のみ",
+      "propertyOrder": 6,
+      "format": "table",
+      "items": {
+        "type": "object",
+        "title": "ニックネーム",
+        "properties": {
+          "from": {
+            "type": "string",
+            "title": "元のユーザー名",
+            "propertyOrder": 1
+          },
+          "to": {
+            "type": "string",
+            "title": "読み上げ名",
+            "propertyOrder": 2
+          }
+        }
+      }
+    },
+    "voice_map.json": {
+      "type": "array",
+      "title": "個別ボイス設定",
+      "description": "※ 読み上げ有効時のみ",
+      "propertyOrder": 7,
+      "format": "table",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "title": "ユーザー名",
+            "propertyOrder": 1
+          },
+          "cid": {
+            "type": "integer",
+            "title": "cid",
+            "propertyOrder": 2
+          }
+        }
+      }
+    }
+  }
+}

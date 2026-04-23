@@ -1,6 +1,6 @@
 {
   "type": "object",
-  "title": "配信ボット総合設定",
+  "title": "基本設定",
   "properties": {
     "logLevel": {
       "type": "string",

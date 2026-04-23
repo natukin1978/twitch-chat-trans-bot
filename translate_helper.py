@@ -4,8 +4,9 @@ import random
 import aiohttp
 
 import global_value as g
+from honorifics_helper import add_honorifics, read_honorifics
 from one_comme_users import OneCommeUsers
-from rename_map_helper import read_rename_map
+from rename_map_helper import get_nickname, read_rename_map
 from talk_voice import talk_voice
 
 logger = logging.getLogger(__name__)
@@ -15,20 +16,19 @@ def get_use_nickname(displayName: str) -> str:
     nickname = None
     rename_map = read_rename_map()
     if rename_map:
-        rename = rename_map.get(displayName, None)
-        if rename is not None:
-            nickname = rename[0]
-            if not nickname:
-                return ""
+        nickname = get_nickname(rename_map, displayName)
+        if nickname == "":
+            # 明示的な空だったら空で確定
+            return ""
 
     if nickname is None:
         nickname = OneCommeUsers.get_nickname(displayName)
     if not nickname:
         nickname = displayName
     # 必要なら敬称を付加する
-    configH = g.config["honorifics"]
-    if not next(filter(lambda x: nickname.endswith(x), configH["other"]), None):
-        nickname += configH["default"]
+    honorifics = read_honorifics()
+    if honorifics:
+        nickname = add_honorifics(honorifics, nickname)
     return nickname
 
 

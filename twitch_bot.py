@@ -16,7 +16,7 @@ from exclude_words_helper import match_exclude_word, read_exclude_words
 from replace_words_helper import match_replace_word, read_replace_words
 from talk_voice import talk_voice
 from translate_helper import get_use_nickname, talk_voice_with_nickname, translate
-from voice_map_helper import get_cid
+from voice_map_helper import get_cid, read_voice_map
 
 logger = logging.getLogger(__name__)
 
@@ -169,7 +169,7 @@ class MyComponent(commands.Component):
             return
 
         user = payload.chatter.display_name
-        cid = get_cid(user)
+        cid = get_cid(read_voice_map(), user)
         nickname = get_use_nickname(user)
 
         if not text:

@@ -1,19 +1,15 @@
-from typing import Any, Dict
-
-from csv_helper import read_csv_to_list
+from config_helper import read_config
 
 
-def read_voice_map() -> Dict[str, Any]:
-    items = read_csv_to_list("voice_map.csv")
-    result = {}
-    for item in items:
-        result[item[0]] = item[1:]
+def read_voice_map(name: str = "voice_map.json"):
+    result = read_config(name)
+    if not result:
+        return []
     return result
 
 
-def get_cid(displayName: str) -> int:
-    voice_map = read_voice_map()
-    voice = voice_map.get(displayName, None)
-    if not voice:
+def get_cid(voice_map, displayName: str) -> int:
+    voice = next(filter(lambda x: x["name"] == displayName, voice_map), None)
+    if voice is None:
         return 0
-    return voice[0]
+    return voice["cid"]
