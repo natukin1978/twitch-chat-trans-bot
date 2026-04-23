@@ -4,6 +4,6 @@
     "speed": 1.0,
     "volume": 1.0
   },
-  "playAsync": false,
-  "maps": []
+  "maps": [],
+  "playAsync": false
 }
