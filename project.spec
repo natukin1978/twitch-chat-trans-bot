@@ -5,7 +5,7 @@ block_cipher = None
 # 同梱するリソースの定義
 added_files = [
     ('schema.json', '.'),
-    ('templates/index.html', 'templates'),
+    ('templates/config.html', 'templates'),
 ]
 
 # TwitchBot本体の設定
