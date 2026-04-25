@@ -181,24 +181,30 @@
       "type": "object",
       "title": "Assistant Seika 設定",
       "description": "音声合成ソフトを操作・制御するソフトで読み上げます。（オプション）",
-      "propertyOrder": 7,
+      "propertyOrder": 6,
       "properties": {
+        "enable": {
+          "type": "boolean",
+          "title": "有効",
+          "format": "checkbox",
+          "propertyOrder": 1
+        },
         "baseUrl": {
           "type": "string",
           "title": "ベースURL",
           "description": "通常は\"http://localhost:7180\"。あなたの環境に適宜合わせる。",
-          "propertyOrder": 1
+          "propertyOrder": 2
         },
         "login": {
           "type": "string",
           "title": "ログインユーザー",
-          "propertyOrder": 2
+          "propertyOrder": 3
         },
         "password": {
           "type": "string",
           "title": "パスワード",
           "format": "password",
-          "propertyOrder": 3
+          "propertyOrder": 4
         }
       },
       "options": {
@@ -208,7 +214,7 @@
     "oneComme": {
       "type": "object",
       "title": "わんコメ (OneComme) 連携",
-      "propertyOrder": 8,
+      "propertyOrder": 7,
       "properties": {
         "pathUsersCsv": {
           "type": "string",

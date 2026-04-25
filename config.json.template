@@ -28,7 +28,8 @@
     ]
   },
   "assistantSeika": {
-    "baseUrl": "",
+    "enable": false,
+    "baseUrl": "http://localhost:7180",
     "login": "SeikaServerUser",
     "password": "SeikaServerPassword"
   },

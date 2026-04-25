@@ -50,6 +50,11 @@ g.config = None
 async def index(request: Request):
     # 画面表示時に現在の設定とスキーマを読み込む
     config_data = read_config(CONFIG_FILE)
+
+    # 項目に無い設定を追加
+    if "enable" not in config_data["assistantSeika"]:
+        config_data["assistantSeika"]["enable"] = bool(config_data["assistantSeika"]["baseUrl"])
+
     schema_data = read_json(get_resource_path(SCHEMA_FILE))
     if schema_data:
         g.schema_data = schema_data

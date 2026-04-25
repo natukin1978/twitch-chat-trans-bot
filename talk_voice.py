@@ -34,6 +34,10 @@ def get_basic_auth():
 
 def get_base_url() -> str:
     configAS = g.config["assistantSeika"]
+    if "enable" not in configAS:
+        return ""
+    if not configAS["enable"]:
+        return ""
     return configAS["baseUrl"]
 
 
