@@ -154,29 +154,6 @@
         "collapsed": true
       }
     },
-    "honorifics": {
-      "type": "object",
-      "title": "敬称設定",
-      "description": "お名前の末尾に付けたい敬称。〝他の敬称〟の候補が付いている場合は付加しません。",
-      "propertyOrder": 6,
-      "properties": {
-        "default": {
-          "type": "string",
-          "title": "通常",
-          "propertyOrder": 1
-        },
-        "other": {
-          "type": "array",
-          "title": "他の敬称",
-          "format": "table",
-          "items": {
-            "type": "string",
-            "title": "候補"
-          },
-          "propertyOrder": 2
-        }
-      }
-    },
     "assistantSeika": {
       "type": "object",
       "title": "Assistant Seika 設定",
