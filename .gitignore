@@ -208,8 +208,9 @@ marimo/_lsp/
 __marimo__/
 
 # Not managed as it is important information
+.tio.tokens.json
 /config.json
 /tokens.db*
 /voice.json
-/voice_map.csv
-/rename_map.csv
+/voice_map.json
+/rename_map.json
