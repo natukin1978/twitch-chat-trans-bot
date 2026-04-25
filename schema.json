@@ -93,7 +93,7 @@
         "service": {
           "type": "string",
           "title": "翻訳サービス",
-          "description": "Translate GASを使う場合は、〝Google翻訳APIを無料で作る方法〟https://qiita.com/satto_sann/items/be4177360a0bc3691fdf",
+          "description": "Translate GASを使う場合は、〝Google翻訳APIを無料で作る方法〟→ https://qiita.com/satto_sann/items/be4177360a0bc3691fdf",
           "enum": [
             "deepL",
             "translateGas"
@@ -196,7 +196,7 @@
         "pathUsersCsv": {
           "type": "string",
           "title": "users.csv パス",
-          "description": "わんコメのユーザーデータ保存先パス。",
+          "description": "わんコメのユーザーデータ保存先パス。ニックネームに使用します。",
           "propertyOrder": 1
         },
         "selectCsvPath": {

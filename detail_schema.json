@@ -1,11 +1,12 @@
 {
   "type": "object",
   "title": "詳細設定",
+  "description": "こちらの設定はアプリの再起動は必要ありません。",
   "properties": {
     "honorifics.json": {
       "type": "object",
       "title": "敬称設定",
-      "description": "お名前の末尾に付けたい敬称。〝他の敬称〟の候補が付いている場合は付加しません。",
+      "description": "お名前の末尾に付けたい敬称。〝他の敬称〟が付いているお名前の場合は付加しません。",
       "propertyOrder": 2,
       "properties": {
         "default": {
@@ -28,7 +29,7 @@
     "exclude_words.json": {
       "type": "array",
       "title": "除外ワード設定",
-      "description": "翻訳させないワード。正規表現で完全一致する必要あります。",
+      "description": "完全一致で指定します。大文字・小文字及び全角半角を区別しません。正規表現での指定が可能です。",
       "propertyOrder": 3,
       "format": "table",
       "items": {
@@ -39,7 +40,7 @@
     "replace_words.json": {
       "type": "array",
       "title": "置換ワード設定",
-      "description": "置換する言葉。正規表現で完全一致する必要あります。",
+      "description": "完全一致で指定します。大文字・小文字及び全角半角を区別しません。正規表現での指定が可能です。",
       "propertyOrder": 4,
       "format": "table",
       "items": {
@@ -62,17 +63,19 @@
     "voice.json": {
       "type": "object",
       "title": "ボイス設定",
-      "description": "※ 読み上げ有効時のみ",
+      "description": "読み上げに関する設定",
       "propertyOrder": 5,
       "properties": {
         "defaultCid": {
           "type": "integer",
-          "title": "通常のCID",
+          "title": "通常のcid",
+          "description": "0の場合、読み上げが無効化されます。",
           "propertyOrder": 1
         },
         "effects": {
           "type": "object",
           "title": "通常のエフェクト",
+          "description": "1で標準。0.5で半分。2で倍。",
           "propertyOrder": 2,
           "properties": {
             "speed": {
@@ -90,6 +93,7 @@
         "maps": {
           "type": "array",
           "title": "個別のエフェクト",
+          "description": "複数の設定が可能です。マッチングは上から順に評価される事を留意してください。",
           "propertyOrder": 3,
           "format": "categories",
           "items": {
@@ -109,11 +113,13 @@
                   "speed": {
                     "type": "number",
                     "title": "速度",
+                    "default": 1,
                     "grid_columns": 6
                   },
                   "volume": {
                     "type": "number",
                     "title": "音量",
+                    "default": 1,
                     "grid_columns": 6
                   }
                 }
@@ -124,6 +130,8 @@
         "playAsync": {
           "type": "boolean",
           "title": "再生同期",
+          "description": "基本は変更しなくても良いです。無効: PLAY2, 有効: PLAYASYNC2",
+          "format": "checkbox",
           "propertyOrder": 4
         }
       }
@@ -131,7 +139,7 @@
     "rename_map.json": {
       "type": "array",
       "title": "ニックネーム設定",
-      "description": "※ 読み上げ有効時のみ",
+      "description": "異なるお名前で読み上げます。 わんコメのニックネームと併用した場合、こちらを優先的に使用します。",
       "propertyOrder": 6,
       "format": "table",
       "items": {
@@ -154,7 +162,7 @@
     "voice_map.json": {
       "type": "array",
       "title": "個別ボイス設定",
-      "description": "※ 読み上げ有効時のみ",
+      "description": "ユーザー毎に読み上げ音声を変える事ができます。",
       "propertyOrder": 7,
       "format": "table",
       "items": {
