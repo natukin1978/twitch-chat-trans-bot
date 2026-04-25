@@ -101,27 +101,39 @@ async def save_config(data: dict):
 async def select_file():
     # plyer, tkinter どちらもダメだったので苦肉の策
 
-    # PowerShellのコマンドを作成（ファイル選択ダイアログを表示してパスを返す）
+    # ダイアログを最前面に持ってくるためのPowerShellスクリプト
     cmd = (
         "Add-Type -AssemblyName System.Windows.Forms; "
         "$f = New-Object System.Windows.Forms.OpenFileDialog; "
         "$f.Filter = 'CSV files (*.csv)|*.csv|All files (*.*)|*.*'; "
         "$f.Title = 'users.csv を選択してください'; "
+
+        # 画面外に見えないダミーフォームを作成し、それを最前面に固定
         "$w = New-Object System.Windows.Forms.Form; "
+        "$w.StartPosition = 'Manual'; "
+        "$w.Location = New-Object System.Drawing.Point(-500, -500); " # 画面外へ
+        "$w.Size = New-Object System.Drawing.Size(1, 1); "
         "$w.TopMost = $true; "
-        "$f.ShowDialog($w) | Out-Null; "
-        "$f.FileName"
+
+        # フォームを表示して即座にアクティブ化
+        "$w.Show(); "
+        "$w.Activate(); "
+
+        # ダミーフォームを親としてダイアログを表示
+        "$res = $f.ShowDialog($w); "
+        "$w.Close(); "
+
+        # パスを返す
+        "if($res -eq 'OK'){ $f.FileName }"
     )
 
     try:
-        # PowerShellを実行
         result = subprocess.run(
-            ["powershell", "-Command", cmd],
+            ["powershell", "-WindowStyle", "Hidden", "-Command", cmd], # PowerShell自体の黒い窓も隠す
             capture_output=True,
             text=True,
-            encoding="cp932" # Windowsの日本語環境に対応
+            encoding="cp932"
         )
-        # 出力されたパスを取得（改行を削除）
         selected_path = result.stdout.strip()
     except Exception as e:
         print(f"Error: {e}")
