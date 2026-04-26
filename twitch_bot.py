@@ -92,7 +92,8 @@ class TwitchBot(commands.AutoBot):
         return resp
 
     async def event_ready(self) -> None:
-        logger.info("Successfully logged in as: %s", self.bot_id)
+        bot = self.user
+        logger.info("Successfully logged in as: %s (%s)", bot.display_name, bot.name, extra={'force': True})
         owner_user = await self.get_owner_user()
         g.owner_attr = {
             "id": owner_user.id,
