@@ -20,3 +20,11 @@ class TestDictHelper(unittest.TestCase):
         }
         result = get_first_non_none_value(data, ["displayName", "id"])
         self.assertEqual("natsuki", result)
+
+    def test_get_first_non_none_value_3(self):
+        data = {
+            "id": "natsuki",
+            "displayName": None,
+        }
+        result = get_first_non_none_value(data, ["isFirst"])
+        self.assertIsNone(result)
