@@ -159,7 +159,6 @@ class MyComponent(commands.Component):
 
     @commands.Component.listener()
     async def event_chat_notification(self, payload: twitchio.ChatNotification) -> None:
-        logger.info(payload, extra={'force': True})
         await self.event_base_message(payload)
 
     async def event_base_message(self, payload: twitchio.ChatMessage | twitchio.ChatNotification) -> None:
@@ -182,6 +181,7 @@ class MyComponent(commands.Component):
                 combined_parts.append(f"({display_text})")
 
         if hasattr(payload, "system_message") and payload.system_message:
+            logger.info(payload.system_message, extra={'force': True})
             combined_parts.append(f"({payload.system_message})")
 
         text = " ".join(combined_parts)
