@@ -181,6 +181,9 @@ class MyComponent(commands.Component):
                 display_text = clean_text if clean_text else raw_text
                 combined_parts.append(f"({display_text})")
 
+        if hasattr(payload, "system_message") and payload.system_message:
+            combined_parts.append(f"({payload.system_message})")
+
         text = " ".join(combined_parts)
         if text.startswith("/"):
             # モデレーターコマンドはスキップ
