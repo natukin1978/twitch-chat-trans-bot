@@ -59,6 +59,9 @@ class TwitchBot(commands.AutoBot):
             eventsub.ChatMessageSubscription(
                 broadcaster_user_id=payload.user_id, user_id=self.bot_id
             ),
+            eventsub.ChatNotificationSubscription(
+                broadcaster_user_id=payload.user_id, user_id=self.bot_id
+            ),
         ]
 
         resp: twitchio.MultiSubscribePayload = await self.multi_subscribe(subs)
@@ -151,6 +154,14 @@ class MyComponent(commands.Component):
     # We use a listener in our Component to display the messages received.
     @commands.Component.listener()
     async def event_message(self, payload: twitchio.ChatMessage) -> None:
+        await self.event_base_message(payload)
+
+    @commands.Component.listener()
+    async def event_chat_notification(self, payload: twitchio.ChatNotification) -> None:
+        logger.info(payload, extra={'force': True})
+        await self.event_base_message(payload)
+
+    async def event_base_message(self, payload: twitchio.ChatMessage | twitchio.ChatNotification) -> None:
         if payload.chatter.id == self.bot.bot_id:
             return
 
@@ -238,7 +249,10 @@ async def setup_database(
                 [
                     eventsub.ChatMessageSubscription(
                         broadcaster_user_id=row["user_id"], user_id=bot_id
-                    )
+                    ),
+                    eventsub.ChatNotificationSubscription(
+                        broadcaster_user_id=row["user_id"], user_id=bot_id
+                    ),
                 ]
             )
 
