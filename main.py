@@ -30,7 +30,8 @@ async def main():
     logging.getLogger("twitchio.web.aio_adapter").setLevel(logging.ERROR)
 
     bot = None
-    async with asqlite.create_pool("tokens.db") as tdb:
+    tdb = await asqlite.create_pool("tokens.db")
+    try:
         tokens, subs = await setup_database(tdb)
 
         bot = TwitchBot(token_database=tdb, subs=subs)
@@ -38,6 +39,14 @@ async def main():
             await bot.add_token(*pair)
 
         await bot.start(load_tokens=False, with_adapter=False)
+    finally:
+        if bot:
+            # BOTが存在し、動作している場合は安全に切断・終了する
+            await bot.close()
+        # データベース接続プールを確実に閉じる
+        async with tdb.acquire() as conn:
+            await conn.execute("PRAGMA wal_checkpoint(TRUNCATE);")
+        await tdb.close()
 
 
 if __name__ == "__main__":
