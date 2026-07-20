@@ -1,5 +1,6 @@
 import logging
 import re
+import time
 from typing import TYPE_CHECKING
 
 import asqlite
@@ -46,30 +47,9 @@ class TwitchBot(commands.AutoBot):
     async def event_oauth_authorized(
         self, payload: twitchio.authentication.UserTokenPayload
     ) -> None:
+        # トークン情報（アクセストークン／リフレッシュトークン）のデータベース更新のみ行います。
+        # 自分のチャンネル専用BOTのため、ここでの二重の購読登録（multi_subscribe）は行いません。
         await self.add_token(payload.access_token, payload.refresh_token)
-
-        if not payload.user_id:
-            return
-
-        if payload.user_id == self.bot_id:
-            # We usually don't want subscribe to events on the bots channel...
-            return
-
-        # A list of subscriptions we would like to make to the newly authorized channel...
-        subs: list[eventsub.SubscriptionPayload] = [
-            eventsub.ChatMessageSubscription(
-                broadcaster_user_id=payload.user_id, user_id=self.bot_id
-            ),
-            eventsub.ChatNotificationSubscription(
-                broadcaster_user_id=payload.user_id, user_id=self.bot_id
-            ),
-        ]
-
-        resp: twitchio.MultiSubscribePayload = await self.multi_subscribe(subs)
-        if resp.errors:
-            logger.warning(
-                "Failed to subscribe to: %r, for user: %s", resp.errors, payload.user_id
-            )
 
     async def add_token(
         self, token: str, refresh: str
@@ -97,7 +77,7 @@ class TwitchBot(commands.AutoBot):
 
     async def event_ready(self) -> None:
         bot = self.user
-        logger.info("Successfully logged in as: %s (%s)", bot.display_name, bot.name, extra={'force': True})
+        logger.info("Successfully logged in as: %s (%s)", bot.display_name, bot.name, extra={"force": True})
         owner_user = self.owner
         g.owner_attr = {
             "id": owner_user.id,
@@ -149,6 +129,8 @@ class MyComponent(commands.Component):
         # Passing args is not required...
         # We pass bot here as an example...
         self.bot = bot
+        # 処理済みメッセージIDを保持する辞書（重複呼び出しガード用）
+        self.processed_message_ids: dict[str, float] = {}
         self.prev_nickname = ""
 
     # An example of listening to an event
@@ -162,6 +144,25 @@ class MyComponent(commands.Component):
         await self.event_base_message(payload)
 
     async def event_base_message(self, payload: twitchio.ChatMessage | twitchio.ChatNotification) -> None:
+        # 重複メッセージのガード処理
+        current_time = time.time()
+        msg_id = getattr(payload, "id", None)
+
+        if msg_id:
+            if msg_id in self.processed_message_ids:
+                logger.debug("Duplicate message received (ID: %s), skipping.", msg_id)
+                return
+
+            self.processed_message_ids[msg_id] = current_time
+
+            # 保持後 10 秒経過した古いやつはメモリ解放のために削除
+            self.processed_message_ids = {
+                m_id: t
+                for m_id, t in self.processed_message_ids.items()
+                if current_time - t < 10.0
+            }
+
+        # BOT自身のメッセージは読み上げ・翻訳しない
         if payload.chatter.id == self.bot.bot_id:
             return
 
@@ -181,7 +182,7 @@ class MyComponent(commands.Component):
                 combined_parts.append(f"({display_text})")
 
         if hasattr(payload, "system_message") and payload.system_message:
-            logger.info(payload.system_message, extra={'force': True})
+            logger.info(payload.system_message, extra={"force": True})
             combined_parts.append(f"({payload.system_message})")
 
         text = " ".join(combined_parts)
@@ -254,9 +255,11 @@ async def setup_database(
         for row in rows:
             tokens.append((row["token"], row["refresh"]))
 
+            # BOT自身のアカウントにはイベント購読を設定しない
             if row["user_id"] == bot_id:
                 continue
 
+            # 自分の配信チャンネル（row["user_id"]）のチャット・通知イベントを購読対象に追加
             subs.extend(
                 [
                     eventsub.ChatMessageSubscription(
