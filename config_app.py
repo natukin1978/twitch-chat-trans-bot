@@ -31,10 +31,6 @@ from twitch_bot import (
 app = FastAPI()
 app.mount("/images", StaticFiles(directory="images", html=True), name="images")
 templates = Jinja2Templates(directory=get_resource_path("templates"))
-templates.env.globals.update(
-    CALLBACK_URL_BOT=constants.CALLBACK_URL_BOT,
-    CALLBACK_URL_OWNER=constants.CALLBACK_URL_OWNER,
-)
 
 CONFIG_FILE = "config.json"
 SCHEMA_FILE = "schema.json"
@@ -68,6 +64,8 @@ async def index(request: Request):
         context={
             "config": config_data,
             "schema": schema_data,
+            "callback_url_bot_base": constants.CALLBACK_URL_BOT,
+            "callback_url_owner_base": constants.CALLBACK_URL_OWNER,
         },
     )
 
@@ -101,38 +99,30 @@ async def save_config(data: dict):
 async def select_file():
     # plyer, tkinter どちらもダメだったので苦肉の策
 
-    # ダイアログを最前面に持ってくるためのPowerShellスクリプト
+    # 複雑なAPI定義を排除し、標準機能だけで構成
     cmd = (
         "Add-Type -AssemblyName System.Windows.Forms; "
         "$f = New-Object System.Windows.Forms.OpenFileDialog; "
         "$f.Filter = 'CSV files (*.csv)|*.csv|All files (*.*)|*.*'; "
         "$f.Title = 'users.csv を選択してください'; "
 
-        # 画面外に見えないダミーフォームを作成し、それを最前面に固定
+        # 最前面属性を持たせただけのシンプルな見えない親ウィンドウ
         "$w = New-Object System.Windows.Forms.Form; "
-        "$w.StartPosition = 'Manual'; "
-        "$w.Location = New-Object System.Drawing.Point(-500, -500); " # 画面外へ
-        "$w.Size = New-Object System.Drawing.Size(1, 1); "
         "$w.TopMost = $true; "
 
-        # フォームを表示して即座にアクティブ化
-        "$w.Show(); "
-        "$w.Activate(); "
-
-        # ダミーフォームを親としてダイアログを表示
-        "$res = $f.ShowDialog($w); "
-        "$w.Close(); "
-
-        # パスを返す
-        "if($res -eq 'OK'){ $f.FileName }"
+        # ダイアログを表示（親ウィンドウとして$wを指定）
+        # ShowDialogの戻り値が 'OK' の場合のみパスを返す
+        "if($f.ShowDialog($w) -eq 'OK'){ $f.FileName }"
     )
 
     try:
+        # creationflags で黒い窓を抑制しつつ実行
         result = subprocess.run(
-            ["powershell", "-WindowStyle", "Hidden", "-Command", cmd], # PowerShell自体の黒い窓も隠す
+            ["powershell", "-Command", cmd],
             capture_output=True,
             text=True,
-            encoding="cp932"
+            encoding="cp932",
+            creationflags=0x08000000 # subprocess.CREATE_NO_WINDOW の値
         )
         selected_path = result.stdout.strip()
     except Exception as e:
