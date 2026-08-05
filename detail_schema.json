@@ -40,7 +40,7 @@
     "replace_words.json": {
       "type": "array",
       "title": "置換ワード設定",
-      "description": "完全一致で指定します。大文字・小文字及び全角半角を区別しません。正規表現での指定が可能です。",
+      "description": "部分一致で置換します。大文字・小文字及び全角半角を区別しません。正規表現での指定が可能です。",
       "propertyOrder": 4,
       "format": "table",
       "items": {
