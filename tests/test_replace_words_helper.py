@@ -20,4 +20,5 @@ class TestExcludeWordsHelper(unittest.TestCase):
         self.assertEqual("ぱちぱちぱち", match_replace_word(replace_words, "888"))
         self.assertEqual("ぱちぱちぱち", match_replace_word(replace_words, "8888"))
         self.assertEqual("ぱちぱちぱち", match_replace_word(replace_words, "88888"))
-        self.assertEqual("888円", match_replace_word(replace_words, "888円"))
+        self.assertEqual("ぱちぱちぱち円", match_replace_word(replace_words, "888円"))
+        self.assertEqual("ぱちぱちぱちすごーい", match_replace_word(replace_words, "8888すごーい"))
