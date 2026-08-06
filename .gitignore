@@ -214,3 +214,5 @@ __marimo__/
 /voice.json
 /voice_map.json
 /rename_map.json
+/exclude_words.json
+/replace_words.json
