@@ -3,6 +3,10 @@ import logging
 import os
 import sys
 
+args = len(sys.argv)
+if args <= 2:
+    exit(1)
+
 sys.path.append("..")
 sys.path.append(".")
 
@@ -19,10 +23,10 @@ g.config = read_config()
 # ロガーの設定
 logging.basicConfig(level=logging.INFO)
 
-
 async def main():
-    await talk_voice("ナツキソ 読み上げない&のだ", 200001)
-
+    text = sys.argv[1]
+    cid = int(sys.argv[2])
+    await talk_voice(text, cid)
 
 if __name__ == "__main__":
     asyncio.run(main())
