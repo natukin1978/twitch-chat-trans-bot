@@ -22,3 +22,11 @@ class TestExcludeWordsHelper(unittest.TestCase):
         self.assertEqual("ぱちぱちぱち", match_replace_word(replace_words, "88888"))
         self.assertEqual("ぱちぱちぱち円", match_replace_word(replace_words, "888円"))
         self.assertEqual("ぱちぱちぱちすごーい", match_replace_word(replace_words, "8888すごーい"))
+
+    def test_match_replace_word_kusa(self):
+        replace_words = [{'from': '(?<![a-zA-Z])w+(?![a-zA-Z])', 'to': '草'}]
+        self.assertEqual("", match_replace_word(replace_words, ""))
+        self.assertEqual("PewPewPew", match_replace_word(replace_words, "PewPewPew"))
+        self.assertEqual("草", match_replace_word(replace_words, "www"))
+        self.assertEqual("辛辣で草", match_replace_word(replace_words, "辛辣でw"))
+        self.assertEqual("lol 草", match_replace_word(replace_words, "lol www"))
