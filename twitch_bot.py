@@ -15,7 +15,11 @@ if TYPE_CHECKING:
 
 import global_value as g
 from exclude_words_helper import match_exclude_word, read_exclude_words
-from replace_words_helper import match_replace_word, read_replace_words
+from replace_words_helper import (
+    match_replace_word,
+    read_replace_words,
+    replace_url_to_URL,
+)
 from talk_voice import talk_voice
 from translate_helper import get_use_nickname, talk_voice_with_nickname, translate
 from voice_map_helper import get_cid, read_voice_map
@@ -204,6 +208,8 @@ class MyComponent(commands.Component):
             nickname = ""
         else:
             self.prev_nickname = nickname
+
+        text = replace_url_to_URL(text)
 
         replace_words = read_replace_words()
         text = match_replace_word(replace_words, text)

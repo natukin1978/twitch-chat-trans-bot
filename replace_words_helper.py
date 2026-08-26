@@ -32,3 +32,23 @@ def match_replace_word(replace_words: list[dict], target: str) -> str:
         normalized_text = re.sub(pattern, replacement, normalized_text, flags=re.IGNORECASE)
 
     return normalized_text
+
+
+def replace_url_to_URL(text: str) -> str:
+    """
+    文字列に含まれるURL(http/https)を検出し、" URL " という文字列に置換します。
+
+    Args:
+        text (str): 判定・置換対象のテキスト
+
+    Returns:
+        str: URLが置換されたテキスト
+    """
+    # URLを検出するための正規表現パターン
+    # http:// または https:// で始まり、スペースや特殊文字以外の文字が続く部分にマッチします
+    url_pattern = r'https?://[^\s]+'
+
+    # マッチしたURL部分を " URL " に置換
+    result = re.sub(url_pattern, ' URL ', text)
+
+    return result

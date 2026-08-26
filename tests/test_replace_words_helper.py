@@ -1,6 +1,10 @@
 import unittest
 
-from replace_words_helper import match_replace_word, read_replace_words
+from replace_words_helper import (
+    match_replace_word,
+    read_replace_words,
+    replace_url_to_URL,
+)
 
 
 class TestExcludeWordsHelper(unittest.TestCase):
@@ -30,3 +34,8 @@ class TestExcludeWordsHelper(unittest.TestCase):
         self.assertEqual("草", match_replace_word(replace_words, "www"))
         self.assertEqual("辛辣で草", match_replace_word(replace_words, "辛辣でw"))
         self.assertEqual("lol 草", match_replace_word(replace_words, "lol www"))
+
+    def test_replace_url_to_URL(self):
+        self.assertEqual("", replace_url_to_URL(""))
+        self.assertEqual("www", replace_url_to_URL("www"))
+        self.assertEqual(" URL ", replace_url_to_URL("https://www.twitch.tv/natukiso"))
